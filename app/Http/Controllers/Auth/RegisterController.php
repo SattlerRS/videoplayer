@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'image' => ['image', 'max:2048'], // Validierung für das Bild
         ]);
     }
 
@@ -64,10 +65,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // $imagePath = $data['image']->store('profile_images', 'public');
+        if (request()->hasfile('image')) {
+            $avatarName = time() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('image'), $avatarName);
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'image' => $avatarName ?? NULL, // Speichern des Bildpfads in der Datenbank
         ]);
     }
 }

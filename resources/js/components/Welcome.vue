@@ -1,22 +1,54 @@
 <template>
-     <div class="flex-center position-ref full-height">
-         <div class="content">
-             <div class="title m-b-md">
-                 Welcome to Vue.js on Laravel
-             </div>
-             <div class="links">
-                 <a href="https://laravel.com/docs">View Laravel Docs</a>
-                 <a href="https://vuejs.org/v2/guide/">View Vue Docs</a>
-                 <a href="https://laracasts.com">Watch Videos</a>
-             </div>
-         </div>
-         <div>
-         <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+  <div class="wrapper">
+    <div class="header">
+      <form action="#" v-on:submit.prevent="onSubmit">
+        <div class="d-flex">
+          <div class="p-2 flex-shrink-1">
+            <button class="btn btn-link ml-2" @click="goUpFolder(source)">↑</button>
+          </div>
+          <div class="p-2 w-100">
+            <input type="text" v-model="source" class="form-control">
+          </div>
+          <div class="p-2 flex-shrink-1">
+            <button class="btn btn-outline-primary ml-2" @click="requestGenerateFileTreeObject(source)">Refresh</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="d-flex flex-row align-items-stretch">
+      <div class="sidebar flex-column flex-shrink-1">
+        <h3>Video player</h3>
+        <ul class="nav">
+          <template v-for="(file, index) in files">
+            <a v-if="file.prefix" @click="requestGenerateFileTreeObject(source + '/' + file.prefix)">{{ file.prefix }}</a>
+            <li class="nav-item" :class="{ active: file.path == currentFile.path, prefixed: prefixed }" v-if="file.isValid()">
+              <file-component classes="nav-link" :file="file" :index="index" :play="play"></file-component>
+            </li>
+          </template>
+      </ul>
+    </div>
+    <div class="content flex-column flex-fill">
+      <div v-if="currentFile">
+        <h3 class="mb-3">{{ currentFile.name }}</h3>
+        <div class="embed-responsive embed-responsive-16by9">
+          <video controls :src="currentFile.path" @click="toggle"></video>
+        </div>
+        <hr>
+        <form action="#" class="form-inline justify-content-end" v-on:submit.prevent="onSubmit">
+          Playback speed:
+          <select class="form-control ml-2" v-model="speed">
+            <option :value="option" v-for="option in [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5]">{{ option }}</option>
+          </select>
+        </form>
+      </div>
+      <div v-else>
+        <h3 class="mb-3">Select a video to start</h3>
+      </div>
+    </div>
   </div>
-     </div>
- </template>
+</div>
+</template>
  <script>
     export default {
         mounted() {

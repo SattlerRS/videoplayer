@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Usercontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::post('/home', [App\Http\Controllers\ApiController::class, 'searchInApi'])->name('searchInApi');
 
+
+Route::post('/user/update', [Usercontroller::class, 'searchInApi'])->name('searchInApi');

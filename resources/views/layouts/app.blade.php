@@ -9,6 +9,12 @@
 
     <title>Videoplayer</title>
 
+    <meta charset="UTF-8">
+    @if (Auth::check()) 
+      <meta name="user" content="{{ Auth::user() }}">
+    @endif 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -28,34 +34,34 @@
             </button>
 
             <div id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
-
-                </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <li class="nav-item flex items-center text-white text-nav">
+                                <a class="px-4 py-2 " href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @endif
 
                         @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <li class="nav-item flex items-center text-white text-nav">
+                                <a class="px-4 py-2 " href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
                     @else
-                        <li class="nav-item">
-                            <a id="navbarDropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre class="px-4 py-2 text-white">
+                        <li class="nav-item flex items-center text-white text-nav">
+                            <a class="px-4 py-2" href="{{ route('profile') }}" role="button" aria-haspopup="true" aria-expanded="false" v-pre >
                                 {{ Auth::user()->name }}
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="px-4 py-2 text-white">
+                        <li class="nav-item flex items-center text-white">
+                            <a href="{{ route('profile') }}">
+                                <img  src="{{ asset('image/' . Auth::user()->image) }}" href="#" class="w-12 h-12 rounded-full"/>
+                            </a>
+                        </li>
+                        <li class="nav-item flex items-center text-white text-nav">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="px-4 py-2">
                                 {{ __('Logout') }}
                             </a>
                         </li>

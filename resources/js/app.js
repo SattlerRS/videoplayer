@@ -13,11 +13,15 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
+
+
 const app = createApp({});
 
 
 import WelcomeComponent from './components/Welcome.vue';
 app.component('welcome-component', WelcomeComponent);
 
+import Profil from './components/Profil.vue';
+app.component('profil-component', Profil);
 
 app.mount('#app');

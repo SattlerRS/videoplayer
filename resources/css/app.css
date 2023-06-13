@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer stylings {
+
+    .text-nav{
+        font-size: 18px;
+    }
+    .text-nav:hover{
+        color: orangered !important;
+        font-size: 20px;
+    }
+}

@@ -1,8 +1,3 @@
-
-Hier ist der erweiterte Code mit einem Submit-Button, der die Benutzerdaten über einen Axios POST-Request an den Server übermittelt:
-
-html
-Copy code
 <template>
   <div class="max-h-screen bg-gray-100 flex flex-col items-center justify-center">
     <div class="max-w-md bg-white shadow-md p-8 rounded-lg flex flex-col items-center">
@@ -74,6 +69,7 @@ export default {
       axios.post('/user/update', formData)
         .then(response => {
           // Erfolgreiche Antwort verarbeiten
+          window.location.href = '/';
           console.log(response.data);
         })
         .catch(error => {

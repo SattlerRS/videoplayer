@@ -1,113 +1,158 @@
 <template>
-  <div class="wrapper">
-    <div class="header">
-      <form action="#" v-on:submit.prevent="onSubmit">
-        <div class="d-flex">
-          <div class="p-2 flex-shrink-1">
-            <button class="btn btn-link ml-2" @click="goUpFolder(source)">↑</button>
-          </div>
-          <div class="p-2 w-100">
-            <input type="text" v-model="source" class="form-control">
-          </div>
-          <div class="p-2 flex-shrink-1">
-            <button class="btn btn-outline-primary ml-2" @click="requestGenerateFileTreeObject(source)">Refresh</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="d-flex flex-row align-items-stretch">
-      <div class="sidebar flex-column flex-shrink-1">
-        <h3>Video player</h3>
-        <ul class="nav">
-          <template v-for="(file, index) in files">
-            <a v-if="file.prefix" @click="requestGenerateFileTreeObject(source + '/' + file.prefix)">{{ file.prefix }}</a>
-            <li class="nav-item" :class="{ active: file.path == currentFile.path, prefixed: prefixed }" v-if="file.isValid()">
-              <file-component classes="nav-link" :file="file" :index="index" :play="play"></file-component>
-            </li>
-          </template>
-      </ul>
-    </div>
-    <div class="content flex-column flex-fill">
-      <div v-if="currentFile">
-        <h3 class="mb-3">{{ currentFile.name }}</h3>
-        <div class="embed-responsive embed-responsive-16by9">
-          <video controls :src="currentFile.path" @click="toggle"></video>
-        </div>
-        <hr>
-        <form action="#" class="form-inline justify-content-end" v-on:submit.prevent="onSubmit">
-          Playback speed:
-          <select class="form-control ml-2" v-model="speed">
-            <option :value="option" v-for="option in [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5]">{{ option }}</option>
-          </select>
+  <div class="min-h-screen bg-white flex flex-col justify-start">
+    <div class="relative p-12 w-full sm:max-w-3xl sm:mx-auto">
+      <div class="overflow-hidden z-0 rounded-full relative p-3">
+        <form role="form" class="relative flex z-50 bg-orange-500 rounded-full" @submit.prevent="submitSearch">
+          <input v-model="searchText" type="text" placeholder="enter your search here" class="rounded-full flex-1 px-6 py-4 text-black focus:outline-none">
+          <button type="submit" class="bg-black text-white rounded-full font-semibold px-8 py-4 hover:bg-gray-900 focus:bg-gray-700 focus:outline-none">Search</button>
         </form>
+        <div class="glow glow-1 z-10 bg-orange-500 absolute"></div>
+        <div class="glow glow-2 z-20 bg-orange-400 absolute"></div>
+        <div class="glow glow-3 z-30 bg-orange-300 absolute"></div>
+        <div class="glow glow-4 z-40 bg-orange-200 absolute"></div>
       </div>
-      <div v-else>
-        <h3 class="mb-3">Select a video to start</h3>
+    </div>
+    <div class="mt-8">
+      <div v-for="video in searchResults" :key="video.id" class="mb-4">
+        <h2 class="text-xl font-semibold"></h2>
+        <div class="flex">
+          <iframe :src="getVideoUrl(video.id)" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
- <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      searchText: '',
+      searchResults: [] // Array to store the search results
+    };
+  },
+  methods: {
+    submitSearch() {
+      if (this.searchText !== '') {
+        axios
+          .post('/home', { search: this.searchText })
+          .then(response => {
+            // Successful response received from the backend
+            this.searchResults = response.data.items; // Store the search results in the data property
+          })
+          .catch(error => {
+            // Error sending the request
+            console.error(error);
+          });
+      }
+    },
+    getVideoUrl(videoId) {
+     
+      return 'https://www.youtube.com/embed/' + videoId.videoId;
     }
- </script>
- <style scoped>
-     html, body {
-         background-color: 
-#fff;
-         color: 
-#636b6f;
-         font-family: 'Raleway', sans-serif;
-         font-weight: 100;
-         height: 100vh;
-         margin: 0;
-     }
+  }
+};
+</script>
 
-     .full-height {
-         height: 100vh;
-     }
+<style scoped>
+.glow {
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  border-radius: 100%;
+}
 
-     .flex-center {
-         align-items: center;
-         display: flex;
-         justify-content: center;
-     }
+.glow-1 {
+  animation: glow1 4s linear infinite;
+}
 
-     .position-ref {
-         position: relative;
-     }
+.glow-2 {
+  animation: glow2 4s linear infinite;
+  animation-delay: 100ms;
+}
 
-     .top-right {
-         position: absolute;
-         right: 10px;
-         top: 18px;
-     }
+.glow-3 {
+  animation: glow3 4s linear infinite;
+  animation-delay: 200ms;
+}
 
-     .content {
-         text-align: center;
-     }
+.glow-4 {
+  animation: glow4 4s linear infinite;
+  animation-delay: 300ms;
+}
 
-     .title {
-         font-size: 84px;
-     }
+@keyframes glow1 {
+  0% {
+    transform: translate(10%, 10%) scale(1);
+  }
+  25% {
+    transform: translate(-10%, 10%) scale(1);
+  }
+  50% {
+    transform: translate(-10%, -10%) scale(1);
+  }
+  75% {
+    transform: translate(10%, -10%) scale(1);
+  }
+  100% {
+    transform: translate(10%, 10%) scale(1);
+  }
+}
 
-     .links > a {
-         color: 
-#636b6f;
-         padding: 0 25px;
-         font-size: 12px;
-         font-weight: 600;
-         letter-spacing: .1rem;
-         text-decoration: none;
-         text-transform: uppercase;
-     }
+@keyframes glow2 {
+  0% {
+    transform: translate(-10%, -10%) scale(1);
+  }
+  25% {
+    transform: translate(10%, -10%) scale(1);
+  }
+  50% {
+    transform: translate(10%, 10%) scale(1);
+  }
+  75% {
+    transform: translate(-10%, 10%) scale(1);
+  }
+  100% {
+    transform: translate(-10%, -10%) scale(1);
+  }
+}
 
-     .m-b-md {
-         margin-bottom: 30px;
-     }
- </style>
+@keyframes glow3 {
+  0% {
+    transform: translate(-10%, 10%) scale(1);
+  }
+  25% {
+    transform: translate(-10%, -10%) scale(1);
+  }
+  50% {
+    transform: translate(10%, -10%) scale(1);
+  }
+  75% {
+    transform: translate(10%, 10%) scale(1);
+  }
+  100% {
+    transform: translate(-10%, 10%) scale(1);
+  }
+}
+
+@keyframes glow4 {
+  0% {
+    transform: translate(10%, -10%) scale(1);
+  }
+  25% {
+    transform: translate(10%, 10%) scale(1);
+  }
+  50% {
+    transform: translate(-10%, 10%) scale(1);
+  }
+  75% {
+    transform: translate(-10%, -10%) scale(1);
+  }
+  100% {
+    transform: translate(10%, -10%) scale(1);
+  }
+}
+</style>

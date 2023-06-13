@@ -65,17 +65,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        
         // $imagePath = $data['image']->store('profile_images', 'public');
         if (request()->hasfile('image')) {
-            $avatarName = time() . '.' . request()->image->getClientOriginalExtension();
-            request()->image->move(public_path('image'), $avatarName);
+            $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('image'), $imageName);
+        }
+        else{
+            $imageName = 'profil.png';
         }
 
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'image' => $avatarName ?? NULL, // Speichern des Bildpfads in der Datenbank
+            'image' => $imageName ?? NULL, // Speichern des Bildpfads in der Datenbank
         ]);
     }
 }

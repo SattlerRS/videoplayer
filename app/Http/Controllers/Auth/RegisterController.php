@@ -83,4 +83,5 @@ class RegisterController extends Controller
             'image' => $imageName ?? NULL, // Speichern des Bildpfads in der Datenbank
         ]);
     }
+    
 }

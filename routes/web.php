@@ -25,12 +25,11 @@ Route::get('/profile', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/user/update', 'UserController@update')->name('user.update');
 
 Route::get('/user/update', [Usercontroller::class, 'update']);
+
+Route::post('/home', [App\Http\Controllers\ApiController::class, 'searchInApi'])->name('searchInApi');

@@ -12,11 +12,15 @@
         <div class="glow glow-4 z-40 bg-orange-200 absolute"></div>
       </div>
     </div>
-    <div class="mt-8">
-      <div v-for="video in searchResults" :key="video.id" class="mb-4">
-        <h2 class="text-xl font-semibold"></h2>
-        <div class="flex">
-          <iframe :src="getVideoUrl(video.id)" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    <div class="mt-8 flex flex-wrap">
+      <div v-for="video in searchResults" :key="video.id" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-4">
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <div class="flex justify-center">
+            <iframe :src="getVideoUrl(video.id)" width="280" height="157" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">{{ video.snippet.title }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,7 +53,6 @@ export default {
       }
     },
     getVideoUrl(videoId) {
-     
       return 'https://www.youtube.com/embed/' + videoId.videoId;
     }
   }
@@ -145,7 +148,7 @@ export default {
   25% {
     transform: translate(10%, 10%) scale(1);
   }
-  50% {
+   50% {
     transform: translate(-10%, 10%) scale(1);
   }
   75% {

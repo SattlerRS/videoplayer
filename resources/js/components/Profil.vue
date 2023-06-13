@@ -1,24 +1,27 @@
 <template>
   <div class="max-h-screen bg-gray-100 flex flex-col items-center justify-center">
-    <div class="max-w-md bg-white shadow-md p-8 rounded-lg flex flex-col items-center">
+    <div class="max-w-lg bg-black shadow-lg p-8 rounded-lg flex flex-col items-center">
       
       <div v-if="user">
         <div class="mb-4 flex flex-col items-center">
-          <h1 class="text-2xl font-bold mb-4">Benutzer-Detailansicht</h1>
+          <h1 class="text-2xl font-bold mb-4 text-white">Benutzerdetails</h1>
           <img :src="selectedImage ? selectedImage : '/image/' + user.image" alt="Benutzerbild" ref="file" class="rounded-full mb-4" @click="selectImage" :style="{ cursor: selectedImage ? 'pointer' : 'default' }">
         </div>
-        <div class="mb-4 flex flex-row items-center">
-          <label for="name" class="mb-1">Name: </label>
-          <input type="text" id="name" v-model="user.name" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 mb-2">
+        <div class="mb-4 flex flex-col items-center">
+          <label for="name" class="mb-1 text-lg text-white">Name:</label>
+          <input type="text" id="name" v-model="user.name" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 mb-2 text-center text-lg">
         </div>
-        <div class="mb-4 flex flex-row items-center">
-          <label for="email" class="mb-1">E-Mail: </label>
-          <input type="email" id="email" v-model="user.email" class="border border-gray-300 rounded-lg mx-2 px-2 py-1">
+        <div class="mb-4 flex flex-col items-center">
+          <label for="email" class="mb-1 text-lg text-white">E-Mail:</label>
+          <input type="email" id="email" v-model="user.email" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 text-center text-lg">
         </div>
-        <form @submit.prevent="submitUser">
+        <form @submit.prevent="submitUser" class="flex flex-col items-center">
           <input ref="fileInput" type="file" style="display: none" @change="handleImageChange" class="border border-gray-300 rounded-lg px-2 py-1">
-          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Speichern</button>
+          <button type="submit" class="bg-orange-500 text-black px-4 py-2 rounded-lg text-lg font-bold save-button">Speichern</button>
         </form>
+        <div class="mb-4 flex flex-col items-center">
+          <button class="bg-orange-500 text-black px-2 py-1 rounded-lg text-md font-bold mt-4 save-button" @click="redirectToHome">Back</button>
+        </div>
       </div>
       <div v-else>
         <p>Benutzerdaten werden geladen...</p>
@@ -26,6 +29,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -41,6 +45,9 @@ export default {
     this.fetchUser();
   },
   methods: {
+    redirectToHome() {
+      window.location.href = '/';
+    },
     fetchUser() {
       const userMeta = document.querySelector("meta[name='user']");
       if (userMeta) {

@@ -1,11 +1,11 @@
 <template>
   <div class="max-h-screen bg-gray-100 flex flex-col items-center justify-center">
     <div class="max-w-lg bg-black shadow-lg p-8 rounded-lg flex flex-col items-center">
-      
       <div v-if="user">
         <div class="mb-2 flex flex-col items-center">
           <h1 class="text-2xl font-bold mb-2 text-white">Benutzerdetails</h1>
-          <img :src="selectedImage ? selectedImage : '/image/' + user.image" alt="Benutzerbild" ref="file" class="rounded-full mb-4" @click="selectImage" :style="{ cursor: selectedImage ? 'pointer' : 'default' }">
+          <img :src="selectedImage ? selectedImage : '/image/' + user.image" alt="Benutzerbild" ref="file" class="w-60 h-60 rounded-full ml-20 mr-20 " @click="selectImage" :style="{ cursor: selectedImage ? 'pointer' : 'default' }">
+
         </div>
         <div class="mb-2 flex flex-col items-center">
           <label for="name" class="mb-1 text-lg text-white">Name:</label>
@@ -31,10 +31,11 @@
           <input ref="fileInput" type="file" style="display: none" @change="handleImageChange" class="border border-gray-300 rounded-lg px-2 py-1">
           <button type="submit" class="bg-orange-500 text-black px-4 py-2 rounded-lg text-lg font-bold save-button">Speichern</button>
         </form>
-        <div class="mb-4 flex flex-row items-center justify-center">
-          <button class="bg-orange-500 text-black mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button" @click="togglePasswordContainers">Passwort ändern</button>
-          <button class="bg-orange-500 text-black mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button" @click="redirectToHome">Back</button>
+        <div class="flex flex-row items-center justify-between">
+          <button class="bg-orange-500 text-black mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button flex-grow" @click="togglePasswordContainers">{{ showPasswordPopup ? '- Passwort' : '+ Passwort' }}</button>
+          <button class="bg-orange-500 text-black mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button flex-grow" @click="redirectToHome">Back</button>
         </div>
+
       </div>
       <div v-else>
         <p>Benutzerdaten werden geladen...</p>
@@ -110,13 +111,17 @@ export default {
         .catch(error => {
 
           Swal.fire({
-            title: 'Nachricht',
+            title: 'Achtung',
             text: error.response.data.message,
-            icon: 'info',
+            icon: 'warning',
             confirmButtonText: 'OK',
-            timer: 2000, // Anzeigedauer in Millisekunden (hier 2 Sekunden)
+            timer: 2000, 
             timerProgressBar: true,
-            });
+            confirmButtonColor: 'orangered',
+            customClass: {
+              popup: 'dark-mode-popup',
+            },
+          });
           // console.error(error.response.data);
         });
     }
@@ -124,3 +129,9 @@ export default {
 };
 </script>
 
+<style>
+  .dark-mode-popup {
+    background-color: #1e1e1e;
+    border-color: #ffffff;
+  }
+</style>

@@ -26,10 +26,17 @@
     <div id="app">
 <nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">
         <div class="container">
+            @guest
             <a class="navbar-brand text-white" href="{{ url('/') }}">
                 Videoplayer
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @else
+            <a class="navbar-brand text-white" href="{{ route('home') }}">
+                Videopayer
+            </a>
+            @endguest
+            
+            <button clss="navbar-toggler" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="navbar-toggler-icon"></span>
             </button>
 

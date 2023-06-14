@@ -46,6 +46,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -107,10 +108,19 @@ export default {
           console.log(response.data);
         })
         .catch(error => {
-          // Fehler verarbeiten
-          console.error(error.response.data);
+
+          Swal.fire({
+            title: 'Nachricht',
+            text: error.response.data.message,
+            icon: 'info',
+            confirmButtonText: 'OK',
+            timer: 2000, // Anzeigedauer in Millisekunden (hier 2 Sekunden)
+            timerProgressBar: true,
+            });
+          // console.error(error.response.data);
         });
     }
   }
 };
 </script>
+

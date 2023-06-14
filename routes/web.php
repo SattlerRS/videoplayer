@@ -32,4 +32,4 @@ Route::post('/home', [ApiController::class, 'searchInApi'])->name('searchInApi')
 
 Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
 
-Route::post('/api/index', [ApiController::class, 'index'])->name('/api.index');
+Route::post('/api/index', [ApiController::class, 'index'])->name('api.index');

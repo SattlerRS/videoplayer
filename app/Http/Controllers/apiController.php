@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Google_Client;
 use Google_Service_YouTube;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\FavVideo;
 
 class apiController extends Controller
 {
@@ -51,13 +54,17 @@ class apiController extends Controller
     
     public function index(Request $request)
     {
+        try{
+            $favVideo = new FavVideo();
+            $favVideo->user_id = Auth::user()->id;
+            $favVideo->video_id = $request->input('ID');
+            $favVideo->titel = $request->input('Title');
+            $favVideo->save();
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e]);
+            }
         
-        // $user_id = auth()->id();
-        // $favVideo = new FavVideo();
-        // $favVideo->user_id = $user_id;
-        // $favVideo->video_id = $request->input('ID');
-        // $favVideo->title = $request->input('Title');
-        // $favVideo->save();
 
         return response()->json(['message' => 'Favorited successfully']);
     }

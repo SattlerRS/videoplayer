@@ -40,7 +40,7 @@
     data() {
       return {
         searchText: '',
-        searchResults: [] // Array to store the search results
+        searchResults: []
       };
     },
     methods: {
@@ -66,8 +66,8 @@
             ID: video.id.videoId,
             Title: video.snippet.title,
         };
-        console.log(videoData.Title)
-        console.log(videoData.ID)
+        // console.log(videoData.Title)
+        // console.log(videoData.ID)
         axios
         .post('/api/index', videoData)
         .then(response => {

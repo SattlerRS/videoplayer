@@ -22,7 +22,7 @@ class apiController extends Controller
         'part' => 'snippet,id',
         'q' => $search['search'],
         'key' => $apiKey,
-        'maxResults' => 5,
+        'maxResults' => 10,
     ];
 
     $response = file_get_contents($url . '?' . http_build_query($params));

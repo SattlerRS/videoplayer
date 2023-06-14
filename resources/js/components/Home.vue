@@ -62,8 +62,21 @@
         return 'https://www.youtube.com/embed/' + videoId.videoId;
       },
       addToFavorites(video) {
-        console.log('Title:', video.snippet.title);
-        console.log('ID:', video.id.videoId);
+        const videoData = {
+            ID: video.id.videoId,
+            Title: video.snippet.title,
+        };
+        console.log(videoData.Title)
+        console.log(videoData.ID)
+        axios
+        .post('/api/index', videoData)
+        .then(response => {
+          console.log(response.data.message); // Ausgabe des Backend-Responses
+          })
+        .catch(error => {
+      console.error(error);
+    });
+        
       }
       
     }

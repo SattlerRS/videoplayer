@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Usercontroller;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,10 @@ Route::get('/profile', function () {
 
 Auth::routes();
 
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('/home', [App\Http\Controllers\ApiController::class, 'searchInApi'])->name('searchInApi');
+Route::post('/home', [ApiController::class, 'searchInApi'])->name('searchInApi');
 
 Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
+
+Route::post('/api/index', [ApiController::class, 'index'])->name('/api.index');

@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Google_Client;
 use Google_Service_YouTube;
+use Auth;
+
 class apiController extends Controller
 {
     public function searchInApi(Request $request)
 {
+    
     $search = $request->validate([
         'search' => ['required'],
     ]);
 
     // Hier kannst du die API-Codes tauschen
-    //$apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
-    $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
+    $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+    //$apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
 
     $url = 'https://www.googleapis.com/youtube/v3/search';
     $params = [
@@ -37,17 +40,26 @@ class apiController extends Controller
             }
         }
     }
-
+    
     // Ersetze das ursprüngliche Ergebnis mit den gefilterten Ergebnissen
+    
     $result['items'] = $filteredResults;
 
     // Gib das Ergebnis als JSON zurück
     return response()->json($result);
 }
     
-    public function index()
+    public function index(Request $request)
     {
-        //
+        
+        // $user_id = auth()->id();
+        // $favVideo = new FavVideo();
+        // $favVideo->user_id = $user_id;
+        // $favVideo->video_id = $request->input('ID');
+        // $favVideo->title = $request->input('Title');
+        // $favVideo->save();
+
+        return response()->json(['message' => 'Favorited successfully']);
     }
     /**
      * Show the form for creating a new resource.

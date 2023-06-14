@@ -17,15 +17,15 @@
         </div>
         <div id="passwordcontainer" v-if="showPasswordPopup" class="mb-2 flex flex-col items-center">
           <label for="passwordOrigin" class="mb-1 text-lg text-white">Aktuelles Passwort:</label>
-          <input type="password" id="passwordOrigin" v-model="user.passwordOrigin" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 text-center text-lg">
+          <input type="password" id="passwordOrigin" v-model="user.passwordOrigin" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 text-center text-lg" required>
         </div>
         <div id="passwordcontainer" v-if="showPasswordPopup" class="mb-2 flex flex-col items-center">
           <label for="password" class="mb-1 text-lg text-white">Neues Passwort:</label>
-          <input type="password" id="password" v-model="user.password" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 text-center text-lg">
+          <input type="password" id="password" v-model="user.password" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 text-center text-lg" required>
         </div>
         <div id="passwordcontainer" v-if="showPasswordPopup" class="mb-2 flex flex-col items-center">
           <label for="passwordRepeat" class="mb-1 text-lg text-white">Passwort wiederholen:</label>
-          <input type="password" id="passwordRepeat" v-model="user.passwordRepeat" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 text-center text-lg">
+          <input type="password" id="passwordRepeat" v-model="user.passwordRepeat" class="border border-gray-300 rounded-lg mx-2 px-2 py-1 text-center text-lg" required>
         </div>
         <form @submit.prevent="submitUser" class="flex flex-col items-center">
           <input ref="fileInput" type="file" style="display: none" @change="handleImageChange" class="border border-gray-300 rounded-lg px-2 py-1">

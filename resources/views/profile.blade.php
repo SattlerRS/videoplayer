@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="py-4">
+<main>
             <div id="app">
                 <profil-component></profil-component>
             </div>

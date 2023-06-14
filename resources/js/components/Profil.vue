@@ -1,10 +1,10 @@
 <template>
-  <div class="max-h-screen bg-gray-100 flex flex-col items-center justify-center">
-    <div class="max-w-lg bg-black shadow-lg p-8 rounded-lg flex flex-col items-center">
+ <div class="h-screen bg-black flex flex-col items-center">
+    <div class="max-w-lg mt-4  bg-black p-8 rounded-lg flex flex-col items-center shadow">
       <div v-if="user">
         <div class="mb-2 flex flex-col items-center">
           <h1 class="text-2xl font-bold mb-2 text-white">Benutzerdetails</h1>
-          <img :src="selectedImage ? selectedImage : '/image/' + user.image" alt="Benutzerbild" ref="file" class="w-60 h-60 rounded-full ml-20 mr-20 " @click="selectImage" :style="{ cursor: selectedImage ? 'pointer' : 'default' }">
+          <img :src="selectedImage ? selectedImage : '/image/' + user.image" alt="Benutzerbild" ref="file" class="w-50 h-50 rounded-full ml-20 mr-20 " @click="selectImage" :style="{ cursor: selectedImage ? 'pointer' : 'default' }">
 
         </div>
         <div class="mb-2 flex flex-col items-center">

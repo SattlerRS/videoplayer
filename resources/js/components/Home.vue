@@ -50,7 +50,8 @@
             .post('/home', { search: this.searchText })
             .then(response => {
               // Successful response received from the backend
-              this.searchResults = response.data.items; // Store the search results in the data property
+              this.searchResults = response.data.items;
+               console.log(this.searchResults); // Store the search results in the data property
             })
             .catch(error => {
               // Error sending the request

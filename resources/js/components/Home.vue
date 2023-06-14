@@ -51,6 +51,7 @@
             .then(response => {
               // Successful response received from the backend
               this.searchResults = response.data.items; // Store the search results in the data property
+              
             })
             .catch(error => {
               // Error sending the request
@@ -59,15 +60,20 @@
         }
       },
       getVideoUrl(videoId) {
+        
         return 'https://www.youtube.com/embed/' + videoId.videoId;
       },
       addToFavorites(video) {
         const videoData = {
             ID: video.id.videoId,
             Title: video.snippet.title,
+            Thumbnail:video.snippet.thumbnails.default.url
         };
-        // console.log(videoData.Title)
-        // console.log(videoData.ID)
+        
+       
+
+        
+      
         axios
         .post('/api/index', videoData)
         .then(response => {

@@ -13,6 +13,7 @@ class FavVideo extends Model
         'user_id',
         'video_id',
         'titel',
+        'thumbnail',
     ];
 
     public function user()

@@ -59,6 +59,7 @@ class apiController extends Controller
             $favVideo->user_id = Auth::user()->id;
             $favVideo->video_id = $request->input('ID');
             $favVideo->titel = $request->input('Title');
+            $favVideo-> thumbnail = $request-> input('Thumbnail');
             $favVideo->save();
         }
         catch(Exception $e){

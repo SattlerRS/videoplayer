@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('video_id');
             $table->string('titel');
+            $table->string('thumbnail');
             $table->timestamps();
 
             // Foreign key constraints

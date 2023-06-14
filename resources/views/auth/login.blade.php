@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto">
+<div class="container mx-auto mt-10">
     <div class="flex justify-center">
         <div class="w-8/12">
             <div class="bg-black rounded-lg shadow">
@@ -46,6 +46,11 @@
                             </button>
                         </div>
                     </form>
+
+                    <!-- Link zum Zurücksetzen des Passworts -->
+                    <div class="mt-4">
+                        <a href="{{ route('password.request') }}" class="text-orange-500">{{ __('Forgot Your Password?') }}</a>
+                    </div>
                 </div>
             </div>
         </div>

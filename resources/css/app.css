@@ -14,27 +14,6 @@
     .save-button:hover{
         background-color: orangered !important;
     }
-    .dark-mode {
-  background-color: #333333;
-  color: #ffffff;
-}
 
-.dark-mode-title {
-  color: #ffffff;
-}
-
-.dark-mode-content {
-  color: #ffffff;
-}
-
-.dark-mode-confirm-button {
-  background-color: #333333;
-  color: #ffffff;
-  border: 1px solid #ffffff;
-}
-
-.dark-mode-confirm-button:hover {
-  background-color: #ffffff;
-  color: #333333;
-}
+    
 }

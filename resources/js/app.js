@@ -21,6 +21,9 @@ const app = createApp({});
 import WelcomeComponent from './components/Welcome.vue';
 app.component('welcome-component', WelcomeComponent);
 
+import HomeComponent from './components/Home.vue';
+app.component('home-component',HomeComponent)
+
 import Profil from './components/Profil.vue';
 app.component('profil-component', Profil);
 

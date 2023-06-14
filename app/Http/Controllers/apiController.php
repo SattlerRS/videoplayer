@@ -8,33 +8,42 @@ use Google_Service_YouTube;
 class apiController extends Controller
 {
     public function searchInApi(Request $request)
-    {
-        $search = $request->validate([
-            'search' => ['required'],
-        ]);
-        //Hier kann man die api codes tauschen
+{
+    $search = $request->validate([
+        'search' => ['required'],
+    ]);
 
-        //$apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
-        $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
-    
-        $url = 'https://www.googleapis.com/youtube/v3/search';
-        $params = [
-            'part' => 'snippet,id',
-            'q' => $search['search'],
-            'key' => $apiKey,
-            'maxResults' => 3,
-        ];
-        
-        $response = file_get_contents($url . '?' . http_build_query($params));
-        $result = json_decode($response, true);
-        
-    
-    
-        // Hier kannst du das Ergebnis verarbeiten
-    
-        // Beispiel: Rückgabe des Ergebnisses als JSON
-        return response()->json($result);
+    // Hier kannst du die API-Codes tauschen
+    //$apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+    $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
+
+    $url = 'https://www.googleapis.com/youtube/v3/search';
+    $params = [
+        'part' => 'snippet,id',
+        'q' => $search['search'],
+        'key' => $apiKey,
+        'maxResults' => 5,
+    ];
+
+    $response = file_get_contents($url . '?' . http_build_query($params));
+    $result = json_decode($response, true);
+
+    // Filtere die Videos nach gültiger ID
+    $filteredResults = [];
+    if (isset($result['items'])) {
+        foreach ($result['items'] as $item) {
+            if (isset($item['id']['videoId'])) {
+                $filteredResults[] = $item;
+            }
+        }
     }
+
+    // Ersetze das ursprüngliche Ergebnis mit den gefilterten Ergebnissen
+    $result['items'] = $filteredResults;
+
+    // Gib das Ergebnis als JSON zurück
+    return response()->json($result);
+}
     
     public function index()
     {

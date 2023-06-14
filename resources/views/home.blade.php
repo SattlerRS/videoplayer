@@ -3,7 +3,7 @@
 @section('content')
 <main class="py-4">
             <div id="app">
-                <welcome-component></welcome-component>
+                <home-component></home-component>
             </div>
         </main>
 @endsection

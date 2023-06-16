@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Usercontroller;
 use App\Http\Controllers\ApiController;
 
@@ -39,3 +38,5 @@ Route::post('/user/update', [UserController::class, 'update'])->name('user.updat
 Route::post('/api/index', [ApiController::class, 'index'])->name('api.index');
 
 Route::get('/api/getFavVideos', [ApiController::class, 'getFavVideos'])->name('api.getFavVideos');
+
+Route::post('/api/delFavVideo', [ApiController::class, 'delFavVideo'])->name('api.delFavVideo');

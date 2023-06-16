@@ -20,8 +20,8 @@ class apiController extends Controller
     ]);
 
     // Hier kannst du die API-Codes tauschen
-    $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
-    //$apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
+    // $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+    $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
 
     $url = 'https://www.googleapis.com/youtube/v3/search';
     $params = [
@@ -68,6 +68,29 @@ class apiController extends Controller
         
 
         return response()->json(['message' => 'Favorited successfully']);
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function getFavVideos()
+    {
+        // Prüfen, ob der Benutzer eingeloggt ist
+        if (Auth::check()) {
+            // Benutzer-ID des eingeloggten Benutzers abrufen
+            $userId = Auth::user()->id;
+
+            // Favoritenvideos des Benutzers abfragen
+            $favVideos = FavVideo::where('user_id', $userId)->get();
+
+            // Response mit den gefundenen Favoritenvideos zurückgeben
+            return response()->json($favVideos);
+        }
+
+        // Wenn der Benutzer nicht eingeloggt ist, eine entsprechende Fehlermeldung zurückgeben
+        return response()->json(['error' => 'Benutzer ist nicht eingeloggt'], 401);
+        
     }
     /**
      * Show the form for creating a new resource.

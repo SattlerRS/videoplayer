@@ -43,7 +43,20 @@
         searchResults: []
       };
     },
+    mounted() {
+      this.fetchFavVideos();
+    },
     methods: {
+      fetchFavVideos() {
+        axios
+          .get('/api/getFavVideos')
+          .then(response => {
+            console.log(response.data); // Ausgabe der Backend-Antwort auf der Konsole
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
       submitSearch() {
         if (this.searchText !== '') {
           axios

@@ -156,6 +156,7 @@ function covtime($youtube_time){
             $favVideo->video_id = $videoId;
             $favVideo->titel = $request->input('Title');
             $favVideo->thumbnail = $request->input('Thumbnail');
+            $favVideo->duration = $request->input('Duration');
             $favVideo->save();
 
             return response()->json(['message' => 'Erfolgreich favorisiert']);

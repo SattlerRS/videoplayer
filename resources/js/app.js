@@ -39,4 +39,18 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleButton.addEventListener('click', function () {
             dropdownMenu.classList.toggle('hidden');
         });
-    });
+});
+    
+window.addEventListener('scroll', function() {
+            var scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            if (window.pageYOffset > 0) {
+                scrollToTopBtn.classList.remove('hidden');
+            } else {
+                scrollToTopBtn.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('scrollToTopBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });

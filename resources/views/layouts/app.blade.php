@@ -20,7 +20,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-black shadow">
+        <nav class="navbar navbar-expand-md navbar-light bg-black shadow sticky top-0 z-[1000]">
             <div class="container">
                 @guest
                 <a href="{{ url('/') }}">
@@ -139,6 +139,12 @@
             @yield('content')
         </main>
     </div>
+
+    <a href="#" id="scrollToTopBtn" class="scroll-to-top fixed bottom-4 right-4 bg-black text-white rounded-full p-3 shadow z-[1000] hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11l7-7 7 7M5 19l7-7 7 7" />
+        </svg>
+    </a>
     <footer class="bg-gray-900 text-white text-center py-2 fixed bottom-0 left-0 right-0">
         <h3>© by SP-Softwaresolutions</h3>
     </footer>

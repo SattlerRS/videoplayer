@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-black flex flex-col justify-start">
+  <div class="min-h-screen bg-black flex flex-col justify-start pb-5">
     <div class="relative p-12 w-full sm:max-w-3xl sm:mx-auto">
       <div class="overflow-hidden z-0 rounded-full relative p-3">
         <form role="form" class="relative flex z-50 bg-orange-500 rounded-full" @submit.prevent="submitSearch">
@@ -28,55 +28,74 @@
         </div>
         <!-- Videoplayer Favourites End -->
 
-<!-- Search -->
-<div class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="searches">
-  <div v-for="video in searchResults" :key="video.id" class="w-full">
-    <div class="flex justify-center m-2">
-      <div class="card card-compact bg-orange-500 shadow-xl mx-2" style="min-width: 300px; max-width: 300px; min-height: 300px; max-height: 300px;">
-        <div class="p-2 flex justify-center">
-          <div class="video-container">
-            <iframe :src="getVideoUrl(video.id)" frameborder="0" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="card-body">
-          <h2 class="card-title text-black font-black text-center">{{ video.snippet.title }}</h2>
-          <h3>{{ video.duration }}</h3>
-          <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
-            <button type="button" @click="addToFavorites(video)"
-              class="text-black bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Fav</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<!-- Search End -->
-
-
-      <!-- Favorites -->
-      <div id="favorites" class="border-2 border-white rounded-lg m-2">>
-        <h2 class="text-white text-lg font-bold mx-4">Ihre Favoriten:</h2>
-        <div v-for="fav in favVideos" :key="fav.id" class="flex justify-center mb-4">
-          <div class="card card-compact w-96 bg-orange-500 shadow-xl mx-4" style="height: 100px;">
-            <div class="flex items-center">
-              <div class="thumbnail-container w-100">
-                <img :src="fav.thumbnail" alt="Video Thumbnail" class="thumbnail-image">
-              </div>
-              <div class="card-body flex-grow">
-                <h2 class="card-title text-black font-black">{{ fav.titel }}</h2>
-              </div>
-              <div class="card-actions flex flex-col items-center">
-                <button type="button" @click="playVideo(fav)"
-                  class="text-black m-1 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center">Play</button>
-                <button type="button" @click="delFromFavorites(fav)"
-                  class="text-black m-1 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-3 py-2.5 text-center">Del</button>
+        <!-- Search -->
+        <div class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+          id="searches">
+          <div v-for="video in searchResults" :key="video.id" class="w-full">
+            <div class="flex justify-center m-2">
+              <div class="card card-compact bg-orange-500 shadow-xl mx-2"
+                style="min-width: 300px; max-width: 300px; min-height: 300px; max-height: 300px;">
+                <div class="p-2 flex justify-center">
+                  <div class="video-container">
+                    <iframe :src="getVideoUrl(video.id)" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h2 class="card-title text-black font-black text-center">{{ video.snippet.title }}</h2>
+                  <h3>{{ video.duration }}</h3>
+                  <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
+                    <button type="button" @click="addToFavorites(video)"
+                      class="text-black bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Fav</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Search End -->
+
+
+      <!-- Favorites -->
+      <div v-if="favVideos" id="favorites">
+        <div class="border-2 border-white rounded-lg m-2">
+          <h2 class="text-white text-lg font-bold mx-4 mb-2">Ihre Favoriten:</h2>
+          <div v-for="fav in favVideos" :key="fav.id" class="flex justify-center mb-4">
+            <div class="card card-compact w-96 bg-black shadow mx-4 h-50 text-white" style="height: 100px;">
+              <div class="flex items-center w-100">
+                <div class="thumbnail-container w-75 ">
+                  <img :src="fav.thumbnail" alt="Video Thumbnail" class="thumbnail-image"
+                    style="object-fit: cover; width: 100%; height: 100%;">
+                </div>
+                <div class="card-body flex-grow">
+                  <h2 class="card-title font-black">{{ fav.titel }}</h2>
+                </div>
+                <div class="card-actions flex flex-col items-center">
+                  <button type="button" @click="playVideo(fav)"
+                    class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
+                    <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Play
+                  </button>
+
+                  <button type="button" @click="delFromFavorites(fav)"
+                    class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
+                    <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M6 6 L18 18 M6 18 L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                    Del
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Favorites End-->
+
     </div>
   </div>
 </template>
@@ -88,7 +107,6 @@ export default {
     return {
       favVideoId: '',
       searchText: '',
-      favVideoId: '',
       searchResults: [],
       favVideos: [],
       showVideoPlayer: false,
@@ -171,17 +189,16 @@ export default {
         .then(response => {
           console.log(response.data.message);
           this.fetchFavVideos();// Ausgabe des Backend-Responses
+          Fav.methods.fetchFavVideos();
         })
         .catch(error => {
           console.error(error);
         });
-        console.log(video.duration);
+      console.log(video.duration);
     }
 
   }
 };
 </script>
   
-<style scoped>
-
-</style>
+<style scoped></style>

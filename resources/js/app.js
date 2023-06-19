@@ -27,6 +27,7 @@ app.component('home-component',HomeComponent)
 import Profil from './components/Profil.vue';
 app.component('profil-component', Profil);
 
+
 app.mount('#app');
 
 

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto mt-10">
+<div class="pt-10 bg-black h-screen">
     <div class="flex justify-center">
-        <div class="w-8/12">
-            <div class="card">
-                <div class="card-header bg-orange-500 py-4 px-6">
-                    <h2 class="text-3xl font-semibold text-white">{{ __('Reset Password') }}</h2>
+        <div class="w-8/12 flex justify-center ">
+            <div class="bg-black rounded-lg shadow w-50">
+                <div class="card-header bg-orange-500 py-4 px-6 rounded">
+                    <h2 class="text-3xl font-semibold text-white">{{ __('Passwort zurücksetzen') }}</h2>
                 </div>
 
                 <div class="card-body p-6 bg-black rounded-lg">
@@ -20,7 +20,7 @@
                         @csrf
 
                         <div class="mb-4">
-                            <label for="email" class="block mb-2 text-lg font-medium text-white">{{ __('Email Address') }}</label>
+                            <label for="email" class="block mb-2 text-lg font-medium text-white">{{ __('Email Adresse') }}</label>
 
                             <input id="email" type="email" class="form-input w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-orange-500 focus:border-orange-500 @error('email') border-red-500 @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -31,10 +31,10 @@
 
                         <div class="flex items-center mb-4">
                             <button type="submit" class="px-6 py-3 mr-3 bg-orange-500 text-white rounded-md hover:bg-orange-600 focus:outline-none focus:bg-orange-600">
-                                {{ __('Send Password Reset Link') }}
+                                {{ __('Reset Password') }}
                             </button>
                             <button onclick="window.location='/'" class="px-6 py-3 mx-3 bg-orange-500 text-white rounded-md hover:bg-orange-600 focus:outline-none focus:bg-orange-600">
-                                {{ __('Back') }}
+                                {{ __('Zurück') }}
                             </button>
                         </div>
                      </form>

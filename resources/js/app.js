@@ -28,3 +28,14 @@ import Profil from './components/Profil.vue';
 app.component('profil-component', Profil);
 
 app.mount('#app');
+
+
+// Logik für Tooglebutton
+document.addEventListener('DOMContentLoaded', function () {
+        var toggleButton = document.querySelector('[data-te-dropdown-toggle-ref]');
+        var dropdownMenu = document.querySelector('[data-te-dropdown-menu-ref]');
+
+        toggleButton.addEventListener('click', function () {
+            dropdownMenu.classList.toggle('hidden');
+        });
+    });

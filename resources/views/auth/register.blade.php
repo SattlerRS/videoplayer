@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto mt-10">
+<div class="pt-10 bg-black h-screen">
     <div class="flex justify-center">
-        <div class="w-8/12">
-            <div class="bg-black rounded-lg shadow">
-                <div class="py-4 px-6 bg-orange-500 border-b">
-                    <h2 class="text-3xl font-semibold text-white">{{ __('Register') }}</h2>
+        <div class="w-8/12 flex justify-center">
+            <div class="bg-black rounded-lg shadow w-50">
+                <div class="py-4 px-6 bg-orange-500 rounded-lg">
+                    <h2 class="text-3xl font-semibold text-white">{{ __('Registrieren') }}</h2>
                 </div>
 
                 <div class="p-6">
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="email" class="block mb-2 text-lg font-medium text-white">{{ __('Email Address') }}</label>
+                            <label for="email" class="block mb-2 text-lg font-medium text-white">{{ __('Email Adresse') }}</label>
 
                             <input id="email" type="email" class="form-input w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-orange-500 focus:border-orange-500 @error('email') border-red-500 @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password" class="block mb-2 text-lg font-medium text-white">{{ __('Password') }}</label>
+                            <label for="password" class="block mb-2 text-lg font-medium text-white">{{ __('Passwort') }}</label>
 
                             <input id="password" type="password" class="form-input w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-orange-500 focus:border-orange-500 @error('password') border-red-500 @enderror" name="password" required autocomplete="new-password">
 
@@ -44,15 +44,15 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password-confirm" class="block mb-2 text-lg font-medium text-white">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="block mb-2 text-lg font-medium text-white">{{ __('Passwort wiederholen') }}</label>
 
                             <input id="password-confirm" type="password" class="form-input w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-orange-500 focus:border-orange-500" name="password_confirmation" required autocomplete="new-password">
                         </div>
 
                         <div class="mb-4">
-                            <label for="image" class="block mb-2 text-lg font-medium text-white">{{ __('Profile Image') }}</label>
+                            <label for="image" class="block mb-2 text-lg font-medium text-white">{{ __('Profilbild') }}</label>
 
-                            <input id="image" type="file" class="form-input" name="image">
+                            <input id="image" type="file" class="form-input text-white" name="image">
 
                             @error('image')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>

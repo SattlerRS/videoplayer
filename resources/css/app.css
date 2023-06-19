@@ -12,12 +12,19 @@
         color: orangered !important;
         font-size: 20px;
     }
+    .text-dropdown:hover{
+        color: orangered !important;
+    }
+    .border-dropdown:hover{
+        border-color: orangered !important;
+    }
     .save-button:hover{
         background-color: orangered !important;
     }
     .shadow {
     box-shadow: 0 0 10px 0 rgba(255, 255, 255, 1) !important;
     }
+
 /* Nav-Bar End */
 
 /* Searchbar */

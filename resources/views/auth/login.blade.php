@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto mt-10">
+<div class="pt-10 bg-black h-screen">
     <div class="flex justify-center">
-        <div class="w-8/12">
-            <div class="bg-black rounded-lg shadow">
-                <div class="py-4 px-6 bg-orange-500 border-b">
+        <div class="w-8/12 flex justify-center">
+            <div class="bg-black rounded-lg shadow w-50">
+                <div class="py-4 px-6 bg-orange-500 rounded-lg">
                     <h2 class="text-3xl font-semibold text-white">{{ __('Login') }}</h2>
                 </div>
 
@@ -14,7 +14,7 @@
                         @csrf
 
                         <div class="mb-4">
-                            <label for="email" class="block mb-2 text-lg font-medium text-white">{{ __('Email Address') }}</label>
+                            <label for="email" class="block mb-2 text-lg font-medium text-white">{{ __('Email Adresse') }}</label>
 
                             <input id="email" type="email" class="form-input w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-orange-500 focus:border-orange-500 @error('email') border-red-500 @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password" class="block mb-2 text-lg font-medium text-white">{{ __('Password') }}</label>
+                            <label for="password" class="block mb-2 text-lg font-medium text-white">{{ __('Passwort') }}</label>
 
                             <input id="password" type="password" class="form-input w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-orange-500 focus:border-orange-500 @error('password') border-red-500 @enderror" name="password" required autocomplete="current-password">
 
@@ -49,7 +49,7 @@
 
                     <!-- Link zum Zurücksetzen des Passworts -->
                     <div class="mt-4">
-                        <a href="{{ route('password.request') }}" class="text-orange-500">{{ __('Forgot Your Password?') }}</a>
+                        <a href="{{ route('password.request') }}" class="text-orange-500">{{ __('Passwort vergessen?') }}</a>
                     </div>
                 </div>
             </div>

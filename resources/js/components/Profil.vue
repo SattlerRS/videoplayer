@@ -32,8 +32,8 @@
           <button type="submit" class="bg-orange-500 text-black px-4 py-2 rounded-lg text-lg font-bold save-button">Speichern</button>
         </form>
         <div class="flex flex-row items-center justify-between">
-          <button class="bg-orange-500 text-black mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button flex-grow" @click="togglePasswordContainers">{{ showPasswordPopup ? '- Passwort' : '+ Passwort' }}</button>
-          <button class="bg-orange-500 text-black mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button flex-grow" @click="redirectToHome">Back</button>
+          <button class="bg-orange-500 text-black w-20 mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button flex-grow" @click="togglePasswordContainers">{{ showPasswordPopup ? '- Passwort' : '+ Passwort' }}</button>
+          <button class="bg-orange-500 text-black w-20 mx-2 px-2 py-1 rounded-lg text-md font-bold mt-4 save-button flex-grow" @click="redirectToHome">Zurück</button>
         </div>
 
       </div>

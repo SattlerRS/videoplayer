@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
             dropdownMenu.classList.toggle('hidden');
         });
 });
-    
+
+// Logik für Button Seitenanfang
 window.addEventListener('scroll', function() {
             var scrollToTopBtn = document.getElementById('scrollToTopBtn');
             if (window.pageYOffset > 0) {

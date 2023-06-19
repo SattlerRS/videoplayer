@@ -58,10 +58,10 @@
 
 
       <!-- Favorites -->
-      <div v-if="favVideos" id="favorites">
+      <div v-if="favVideos.length > 0" id="favorites">
         <div class="border-2 border-white rounded-lg m-2">
           <h2 class="text-white text-lg font-bold mx-4 mb-2">Ihre Favoriten:</h2>
-          <div v-for="fav in favVideos" :key="fav.id" class="flex justify-center mb-4">
+          <div v-for="(fav, index) in paginatedFavorites" :key="fav.id" class="flex justify-center mb-4">
             <div class="card card-compact w-96 bg-black shadow mx-4 h-50 text-white" style="height: 100px;">
               <div class="flex items-center w-100">
                 <div class="thumbnail-container w-75 ">
@@ -92,6 +92,19 @@
               </div>
             </div>
           </div>
+          <div class="flex justify-center">
+            <button @click="previousPage" :disabled="currentPage === 0"
+              class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 favButton">
+              Zurück
+            </button>
+            <button @click="nextPage" :disabled="currentPage === totalPages - 1"
+              class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 favButton">
+              Weiter
+            </button>
+          </div>
+          <div class="flex justify-center mt-2 text-white text-sm">
+            {{ displayRange }}
+          </div>
         </div>
       </div>
 
@@ -111,13 +124,44 @@ export default {
       searchResults: [],
       favVideos: [],
       showVideoPlayer: false,
+      currentPage: 0, // Aktuelle Seite der Pagination
+      itemsPerPage: 5, // Anzahl der Videos pro Seite
     };
   },
   mounted() {
     this.fetchFavVideos();
   },
+  computed: {
+    paginatedFavorites() {
+      const startIndex = this.currentPage * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.favVideos.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.favVideos.length / this.itemsPerPage);
+    },
+    displayRange() {
+      return this.getDisplayRange();
+    },
+  },
   methods: {
 
+    getDisplayRange() {
+      const startIndex = this.currentPage * this.itemsPerPage + 1;
+      const endIndex = Math.min((this.currentPage + 1) * this.itemsPerPage, this.favVideos.length);
+      return `Video (${startIndex}-${endIndex}) von ${this.favVideos.length}`;
+    },
+
+    previousPage() {
+      if (this.currentPage > 0) {
+        this.currentPage--;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages - 1) {
+        this.currentPage++;
+      }
+    },
     hidePlayer() {
       this.showVideoPlayer = false;
     },

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('video_id');
             $table->string('titel');
             $table->string('thumbnail');
+            $table->string('duration');
             $table->timestamps();
 
             // Foreign key constraints

@@ -28,30 +28,31 @@
         </div>
         <!-- Videoplayer Favourites End -->
 
-        <!-- Search-->
-        <div class="mt-2 mr-5 ml-5 flex flex-wrap" id="searches">
-          <div v-for="video in searchResults" :key="video.id" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-            <div class="flex justify-center m-2">
-              <div class="card card-compact w-96 bg-orange-500 shadow-xl mx-2" style="width: 300px; height: 275px;">
-                <div class="p-2 flex justify-center">
-                  <div class="video-container">
-                    <iframe :src="getVideoUrl(video.id)" frameborder="0" allowfullscreen></iframe>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <h2 class="card-title text-black font-black text-center">{{ video.snippet.title }}</h2>
-                  <h3>{{ video.duration }}</h3>
-                  <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
-                    <button type="button" @click="addToFavorites(video)"
-                      class="text-black bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Fav</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+<!-- Search -->
+<div class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="searches">
+  <div v-for="video in searchResults" :key="video.id" class="w-full">
+    <div class="flex justify-center m-2">
+      <div class="card card-compact bg-orange-500 shadow-xl mx-2" style="min-width: 300px; max-width: 300px; min-height: 300px; max-height: 300px;">
+        <div class="p-2 flex justify-center">
+          <div class="video-container">
+            <iframe :src="getVideoUrl(video.id)" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title text-black font-black text-center">{{ video.snippet.title }}</h2>
+          <h3>{{ video.duration }}</h3>
+          <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
+            <button type="button" @click="addToFavorites(video)"
+              class="text-black bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Fav</button>
           </div>
         </div>
       </div>
-      <!-- Search End -->
+    </div>
+  </div>
+</div>
+</div>
+<!-- Search End -->
+
 
       <!-- Favorites -->
       <div id="favorites" class="border-2 border-white rounded-lg m-2">>
@@ -162,7 +163,8 @@ export default {
       const videoData = {
         ID: video.id.videoId,
         Title: video.snippet.title,
-        Thumbnail: video.snippet.thumbnails.default.url
+        Thumbnail: video.snippet.thumbnails.default.url,
+        Duration: video.duration,
       };
       axios
         .post('/api/index', videoData)

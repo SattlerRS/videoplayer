@@ -12,26 +12,51 @@
         <div class="glow glow-4 z-40 bg-orange-200 absolute"></div>
       </div>
     </div>
-    <div class="mt-8 flex flex-wrap">
-      <div v-for="video in searchResults" :key="video.id" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-4">
-        <div class="flex justify-center">
-          <div class="card card-compact w-96 bg-orange-500 shadow-xl mx-2" style="width: 300px; height: 275px;">
-            <div class="p-2 flex justify-center">
-              <div class="video-container">
-                <iframe :src="getVideoUrl(video.id)" frameborder="0" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="card-body">
-              <h2 class="card-title text-black">{{ video.snippet.title }}</h2>
-              <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
-                <!-- <button type="button" @click="addToFavorites(video)" class="text-black bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Fav</button> -->
-              </div>
+    
+    <div v-if="showVideoPlayer" class="flex justify-center items-center">
+          <div class="mb-5 flex flex-col justify-center items-center shadow p-4 rounded">
+            <iframe :src="getVideoUrlFav(favVideoId)" frameborder="0" allowfullscreen
+              style="width: 800px; height: 500px;"></iframe>
+            <button type="button" @click="hidePlayer()"
+              class="text-white mt-4 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+                <path fill="#FFFFFF"
+                  d="M7.414 6l4.293-4.293a1 1 0 1 0-1.414-1.414L6 4.586 1.707.293A1 1 0 0 0 .293 1.707L4.586 6 .293 10.293a1 1 0 1 0 1.414 1.414L6 7.414l4.293 4.293a1 1 0 1 0 1.414-1.414L7.414 6z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4" id="searches">
+  <div v-for="video in searchResults" :key="video.id" class="w-full">
+    <div class="flex justify-center m-2">
+      <div class="card card-compact bg-black shadow mx-4" style="min-width: 260px; max-width: 260px; min-height: 270px; max-height: 260px; box-shadow: 0px 0px 10px #FF4500;">
+        <div class="p-2">
+          <div class="video-container" style="position: relative;">
+            <img :src="video.snippet.thumbnails.default.url" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title text-white font-black text-center">{{ getVideoTitel(video.snippet.title) }}</h2>
+          <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
+            <div class="flex">
+              <button type="button" @click="playVideo(video.id.videoId)" class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
+                <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Play
+              </button>
             </div>
           </div>
+          <h3 style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">{{ video.duration }}</h3>
         </div>
       </div>
     </div>
   </div>
+</div>
+  
+</div>
+
 </template>
 <script>
 import axios from 'axios';
@@ -40,11 +65,13 @@ export default {
   data() {
     return {
       searchText: '',
+      favVideoId:'',
+      showVideoPlayer:false,
       searchResults: [] // Array to store the search results
     };
   },
   mounted() {
-    // this.getRandomVideos();
+    //this.getRandomVideos();
   },
   methods: {
     getRandomVideos() {
@@ -59,6 +86,20 @@ export default {
           // Fehler beim Senden der Anfrage
           console.error(error);
         });
+    },
+    hidePlayer() {
+      this.showVideoPlayer = false;
+    },
+    getVideoUrlFav(videoId) {
+      return 'https://www.youtube.com/embed/' + videoId;
+    },
+    playVideo(id) {
+      this.favVideoId = id;
+      this.showVideoPlayer = true;
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Smooth-Scrolling aktivieren, um einen animierten Übergang zu erzielen
+      });
     },
     submitSearch() {
       if (this.searchText !== '') {
@@ -78,10 +119,12 @@ export default {
     getVideoUrl(videoId) {
       return 'https://www.youtube.com/embed/' + videoId.videoId;
     },
-    // addToFavorites(video) {
-    //   console.log('Title:', video.snippet.title);
-    //   console.log('ID:', video.id.videoId);
-    // }
+    getVideoTitel(videoTitel){
+      if (videoTitel.length > 45) {
+              videoTitel = videoTitel.substring(0, 45) + "...";
+      }
+      return videoTitel;
+    },
     
   }
 };

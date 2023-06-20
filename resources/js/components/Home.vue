@@ -289,16 +289,3 @@ export default {
   }
 };
 </script>
-  
-<style>
-.fav-video {
-  /* Hier kannst du das gewünschte Design für die Favoriten-Videos festlegen */
-  color: #FF0000 !important;
-  /* Zum Beispiel: roter Hintergrund */
-}
-
-.fav-video:hover {
-  border-color: orangered !important;
-  color: red !important;
-}
-</style>

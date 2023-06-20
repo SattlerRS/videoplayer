@@ -34,6 +34,11 @@
     .text-orangered{
       color: orangered !important;
     }
+    .fav-video {
+  /* Hier kannst du das gewünschte Design für die Favoriten-Videos festlegen */
+  color: #FF0000 !important;
+  /* Zum Beispiel: roter Hintergrund */
+    }
     
 
 

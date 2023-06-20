@@ -23,7 +23,7 @@
             <iframe :src="getVideoUrlFav(favVideoId)" frameborder="0" allowfullscreen
               style="width: 800px; height: 600px;"></iframe>
             <button type="button" @click="hidePlayer()"
-              class="text-black mt-1 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">X</button>
+              class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">X</button>
           </div>
         </div>
         <!-- Videoplayer Favourites End -->
@@ -65,8 +65,7 @@
             <div class="card card-compact w-96 bg-black shadow mx-4 h-50 text-white" style="height: 100px;">
               <div class="flex items-center w-100">
                 <div class="thumbnail-container w-75 ">
-                  <img :src="fav.thumbnail" alt="Video Thumbnail" class="thumbnail-image"
-                    style="object-fit: cover; width: 100%; height: 100%;">
+                  <img :src="fav.thumbnail" alt="Video Thumbnail" class="thumbnail-image">
                 </div>
                 <div class="card-body flex-grow">
                   <h2 class="card-title font-black">{{ fav.titel }}</h2>

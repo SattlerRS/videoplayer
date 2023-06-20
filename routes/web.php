@@ -33,6 +33,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::post('/home', [ApiController::class, 'searchInApi'])->name('searchInApi');
 
+Route::get('/getRamdomVideos', [ApiController::class, 'getRandomVideos'])->name('getRandomVideos');
+
 Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
 
 Route::post('/api/index', [ApiController::class, 'index'])->name('api.index');

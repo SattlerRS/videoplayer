@@ -43,7 +43,23 @@ export default {
       searchResults: [] // Array to store the search results
     };
   },
+  mounted() {
+    this.getRandomVideos();
+  },
   methods: {
+    getRandomVideos() {
+      axios
+        .get('/getRamdomVideos')
+        .then(response => {
+          // Erfolgreiche Antwort vom Backend erhalten
+          this.searchResults = response.data.items;
+          // Speichere die Suchergebnisse in der data-Eigenschaft
+        })
+        .catch(error => {
+          // Fehler beim Senden der Anfrage
+          console.error(error);
+        });
+    },
     submitSearch() {
       if (this.searchText !== '') {
         axios
@@ -70,120 +86,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.glow {
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  border-radius: 100%;
-}
-
-.glow-1 {
-  animation: glow1 4s linear infinite;
-}
-
-.glow-2 {
-  animation: glow2 4s linear infinite;
-  animation-delay: 100ms;
-}
-
-.glow-3 {
-  animation: glow3 4s linear infinite;
-  animation-delay: 200ms;
-}
-
-.glow-4 {
-  animation: glow4 4s linear infinite;
-  animation-delay: 300ms;
-}
-
-@keyframes glow1 {
-  0% {
-    transform: translate(10%, 10%) scale(1);
-  }
-  25% {
-    transform: translate(-10%, 10%) scale(1);
-  }
-  50% {
-    transform: translate(-10%, -10%) scale(1);
-  }
-  75% {
-    transform: translate(10%, -10%) scale(1);
-  }
-  100% {
-    transform: translate(10%, 10%) scale(1);
-  }
-}
-
-@keyframes glow2 {
-  0% {
-    transform: translate(-10%, -10%) scale(1);
-  }
-  25% {
-    transform: translate(10%, -10%) scale(1);
-  }
-  50% {
-    transform: translate(10%, 10%) scale(1);
-  }
-  75% {
-    transform: translate(-10%, 10%) scale(1);
-  }
-  100% {
-    transform: translate(-10%, -10%) scale(1);
-  }
-}
-
-@keyframes glow3 {
-  0% {
-    transform: translate(-10%, 10%) scale(1);
-  }
-  25% {
-    transform: translate(-10%, -10%) scale(1);
-  }
-  50% {
-    transform: translate(10%, -10%) scale(1);
-  }
-  75% {
-    transform: translate(10%, 10%) scale(1);
-  }
-  100% {
-    transform: translate(-10%, 10%) scale(1);
-  }
-}
-
-@keyframes glow4 {
-  0% {
-    transform: translate(10%, -10%) scale(1);
-  }
-  25% {
-    transform: translate(10%, 10%) scale(1);
-  }
-   50% {
-    transform: translate(-10%, 10%) scale(1);
-  }
-  75% {
-    transform: translate(-10%, -10%) scale(1);
-  }
-  100% {
-    transform: translate(10%, -10%) scale(1);
-  }
-}
-
-.video-container {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio (Höhe/Breite * 100) */
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 1.3%;
-  left: 1.3%;
-  right: 1.3%;
-  width: 97.4%;
-  height: 94%;
-}
-</style>

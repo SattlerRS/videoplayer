@@ -14,53 +14,12 @@ use DateInterval;
 
 class apiController extends Controller
 {
-//     public function searchInApi(Request $request)
-// {
-    
-//     $search = $request->validate([
-//         'search' => ['required'],
-//     ]);
-
-//     // Hier kannst du die API-Codes tauschen
-//     // $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
-//     $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
-
-//     //$url = 'https://www.googleapis.com/youtube/v3/search';
-//     $url = 'https://www.googleapis.com/youtube/v3/search';
-//     $params = [
-//         'part' => 'snippet,id',
-//         'q' => $search['search'],
-//         'key' => $apiKey,
-//         'maxResults' => 10,
-//     ];
-
-//     $response = file_get_contents($url . '?' . http_build_query($params));
-//     $result = json_decode($response, true);
-
-//     // Filtere die Videos nach gültiger ID
-//     $filteredResults = [];
-//     if (isset($result['items'])) {
-//         foreach ($result['items'] as $item) {
-//             if (isset($item['id']['videoId'])) {
-//                 if (isset($videoResult['items']['contentDetails']['duration'])) { $item['duration'] = $videoResult['items']['contentDetails']['duration']; } else { $item['duration'] = 'Unknown'; }
-//                 $filteredResults[] = $item;
-//             }
-//         }
-//     }
-    
-//     // Ersetze das ursprüngliche Ergebnis mit den gefilterten Ergebnissen
-    
-//     $result['items'] = $filteredResults;
-
-//     // Gib das Ergebnis als JSON zurück
-//     return response()->json($result);
-// }
 public function searchInApi(Request $request)
 {
     $search = $request->validate([
         'search' => ['required'],
-    ]); 
-    
+    ]);
+        // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
     $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
 
     $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
@@ -116,6 +75,72 @@ public function searchInApi(Request $request)
 
     return response()->json($result);
 }
+
+    public function getRandomVideos()
+    {
+        // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
+        $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+
+        $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
+        $videoUrl = 'https://www.googleapis.com/youtube/v3/videos';
+
+        $searchParams = [
+            'part' => 'snippet',
+            'order' => 'date',
+            // Videos nach Datum sortieren
+            'key' => $apiKey,
+            'maxResults' => 50, // Große Anzahl von Videos abrufen
+        ];
+
+        $searchResponse = file_get_contents($searchUrl . '?' . http_build_query($searchParams));
+        $searchResult = json_decode($searchResponse, true);
+
+        $filteredResults = [];
+
+        if (isset($searchResult['items'])) {
+            shuffle($searchResult['items']); // Zufällige Reihenfolge der Videos
+
+            $randomVideos = array_slice($searchResult['items'], 0, 10); // 10 zufällige Videos auswählen
+
+            $videoIds = [];
+            foreach ($randomVideos as $item) {
+                if (isset($item['id']['videoId'])) {
+                    $filteredResults[] = $item;
+                    $videoIds[] = $item['id']['videoId'];
+                }
+            }
+
+            if (!empty($videoIds)) {
+                $videoParams = [
+                    'part' => 'contentDetails',
+                    'id' => implode(',', $videoIds),
+                    'key' => $apiKey,
+                ];
+
+                $videoResponse = file_get_contents($videoUrl . '?' . http_build_query($videoParams));
+                $videoResult = json_decode($videoResponse, true);
+
+                if (isset($videoResult['items'])) {
+                    foreach ($filteredResults as &$item) {
+                        foreach ($videoResult['items'] as $video) {
+                            if ($item['id']['videoId'] === $video['id']) {
+                                $duration = $video['contentDetails']['duration'];
+                                $formattedDuration = $this->covtime($duration);
+                                $item['duration'] = $formattedDuration;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $result['items'] = $filteredResults;
+
+        return response()->json($result);
+    }
+
+
 function covtime($youtube_time){
     $start = new DateTime('@0');
     $start->add(new DateInterval($youtube_time));

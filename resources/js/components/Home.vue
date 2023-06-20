@@ -58,6 +58,9 @@
                         Play
                       </button>
                       <button type="button" @click="addToFavorites(video)"
+                        :class="{ 'fav-video': isFavorite(video.id.videoId) }" 
+                        :disabled="isFavorite(video.id.videoId)"
+                        :style="{ 'pointer-events': isFavorite(video.id.videoId) ? 'none' : 'auto' }"
                         class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
                         <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                           <path
@@ -153,6 +156,9 @@ export default {
     // this.getRandomVideos();
   },
   computed: {
+    isFavorite() {
+      return videoId => this.favVideos.some(fav => fav.video_id === videoId);
+    },
     paginatedFavorites() {
       const startIndex = this.currentPage * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -289,4 +295,15 @@ export default {
 };
 </script>
   
-<style scoped></style>
+<style>
+.fav-video {
+  /* Hier kannst du das gewünschte Design für die Favoriten-Videos festlegen */
+  color: #FF0000 !important;
+  /* Zum Beispiel: roter Hintergrund */
+}
+
+.fav-video:hover {
+  border-color: orangered !important;
+  color: red !important;
+}
+</style>

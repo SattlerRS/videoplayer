@@ -19,11 +19,16 @@
 
         <!-- Videoplayer Favourites -->
         <div v-if="showVideoPlayer" class="flex justify-center items-center">
-          <div class="m-5 flex flex-col justify-center items-center">
+          <div class="mb-5 flex flex-col justify-center items-center shadow p-4 rounded">
             <iframe :src="getVideoUrlFav(favVideoId)" frameborder="0" allowfullscreen
-              style="width: 800px; height: 600px;"></iframe>
+              style="width: 800px; height: 500px;"></iframe>
             <button type="button" @click="hidePlayer()"
-              class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">X</button>
+              class="text-white mt-4 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+                <path fill="#FFFFFF"
+                  d="M7.414 6l4.293-4.293a1 1 0 1 0-1.414-1.414L6 4.586 1.707.293A1 1 0 0 0 .293 1.707L4.586 6 .293 10.293a1 1 0 1 0 1.414 1.414L6 7.414l4.293 4.293a1 1 0 1 0 1.414-1.414L7.414 6z" />
+              </svg>
+            </button>
           </div>
         </div>
         <!-- Videoplayer Favourites End -->
@@ -44,15 +49,27 @@
                 <div class="card-body">
                   <h2 class="card-title text-white font-black text-center">{{ getVideoTitel(video.snippet.title) }}</h2>
                   <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
-                    <button type="button" @click="addToFavorites(video)"
-                      class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
-                      <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 21.35L4.81 17.4C2.39 15.9 1 13.36 1 10.65c0-2.91 2.37-5.28 5.28-5.28 1.59 0 3.03 0.71 4.02 1.83C11.69 6.09 11.86 6 12 6c0.14 0 0.31 0.09 0.7 0.2 0.99-1.12 2.43-1.83 4.02-1.83C20.63 5.37 23 7.74 23 10.65c0 2.71-1.39 5.25-3.81 6.75L12 21.35z"/>
-                      </svg>
-                      Fav
-                    </button>
+                    <div class="flex">
+                      <button type="button" @click="playVideo(video.id.videoId)"
+                        class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
+                        <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                        Play
+                      </button>
+                      <button type="button" @click="addToFavorites(video)"
+                        class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
+                        <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                          <path
+                            d="M12 21.35L4.81 17.4C2.39 15.9 1 13.36 1 10.65c0-2.91 2.37-5.28 5.28-5.28 1.59 0 3.03 0.71 4.02 1.83C11.69 6.09 11.86 6 12 6c0.14 0 0.31 0.09 0.7 0.2 0.99-1.12 2.43-1.83 4.02-1.83C20.63 5.37 23 7.74 23 10.65c0 2.71-1.39 5.25-3.81 6.75L12 21.35z" />
+                        </svg>
+                        Fav
+                      </button>
+                    </div>
                   </div>
-                  <h3 style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">{{ video.duration }}</h3>
+                  <h3
+                    style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">
+                    {{ video.duration }}</h3>
                 </div>
               </div>
             </div>
@@ -76,7 +93,7 @@
                   <h2 class="card-title font-black">{{ fav.titel }}</h2>
                 </div>
                 <div class="card-actions flex flex-col items-center">
-                  <button type="button" @click="playVideo(fav)"
+                  <button type="button" @click="playVideo(fav.video_id)"
                     class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
                     <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
@@ -133,7 +150,7 @@ export default {
   },
   mounted() {
     this.fetchFavVideos();
-    this.getRandomVideos();
+    // this.getRandomVideos();
   },
   computed: {
     paginatedFavorites() {
@@ -182,10 +199,15 @@ export default {
       this.showVideoPlayer = false;
     },
 
-    playVideo(fav) {
-      this.favVideoId = fav.video_id;
+    playVideo(id) {
+      this.favVideoId = id;
       this.showVideoPlayer = true;
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Smooth-Scrolling aktivieren, um einen animierten Übergang zu erzielen
+      });
     },
+
     delFromFavorites(fav) {
       axios
         .post('/api/delFavVideo', { favVideoId: fav.video_id })
@@ -237,9 +259,9 @@ export default {
     getVideoUrlFav(videoId) {
       return 'https://www.youtube.com/embed/' + videoId;
     },
-    getVideoTitel(videoTitel){
+    getVideoTitel(videoTitel) {
       if (videoTitel.length > 45) {
-              videoTitel = videoTitel.substring(0, 45) + "...";
+        videoTitel = videoTitel.substring(0, 45) + "...";
       }
       return videoTitel;
     },

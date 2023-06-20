@@ -34,7 +34,7 @@
           id="searches">
           <div v-for="video in searchResults" :key="video.id" class="w-full">
             <div class="flex justify-center m-2">
-              <div class="card card-compact bg-orange-500 shadow-xl mx-2"
+              <div class="card card-compact bg-black shadow mx-4"
                 style="min-width: 260px; max-width: 260px; min-height: 270px; max-height: 260px;">
                 <div class="p-2 flex justify-center">
                   <div class="video-container">
@@ -42,12 +42,17 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <h2 class="card-title text-black font-black text-center">{{ video.snippet.title }}</h2>
-                  <h3>{{ video.duration }}</h3>
+                  <h2 class="card-title text-white font-black text-center">{{ getVideoTitel(video.snippet.title) }}</h2>
                   <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
                     <button type="button" @click="addToFavorites(video)"
-                      class="text-black bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Fav</button>
+                      class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
+                      <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 21.35L4.81 17.4C2.39 15.9 1 13.36 1 10.65c0-2.91 2.37-5.28 5.28-5.28 1.59 0 3.03 0.71 4.02 1.83C11.69 6.09 11.86 6 12 6c0.14 0 0.31 0.09 0.7 0.2 0.99-1.12 2.43-1.83 4.02-1.83C20.63 5.37 23 7.74 23 10.65c0 2.71-1.39 5.25-3.81 6.75L12 21.35z"/>
+                      </svg>
+                      Fav
+                    </button>
                   </div>
+                  <h3 style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">{{ video.duration }}</h3>
                 </div>
               </div>
             </div>
@@ -217,8 +222,13 @@ export default {
       return 'https://www.youtube.com/embed/' + videoId.videoId;
     },
     getVideoUrlFav(videoId) {
-
       return 'https://www.youtube.com/embed/' + videoId;
+    },
+    getVideoTitel(videoTitel){
+      if (videoTitel.length > 45) {
+              videoTitel = videoTitel.substring(0, 45) + "...";
+      }
+      return videoTitel;
     },
     addToFavorites(video) {
       const videoData = {

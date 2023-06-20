@@ -59,9 +59,9 @@
 
       <!-- Favorites -->
       <div v-if="favVideos.length > 0" id="favorites">
-        <div class="border-2 border-white rounded-lg m-2">
-          <h2 class="text-white text-lg font-bold mx-4 mb-2">Ihre Favoriten:</h2>
-          <div v-for="(fav, index) in paginatedFavorites" :key="fav.id" class="flex justify-center mb-4">
+        <div class="border-2 border-orangered rounded-lg m-2">
+          <h2 class="text-orangered text-lg mx-4 mb-2">Ihre Favoriten:</h2>
+          <div v-for="(fav) in paginatedFavorites" :key="fav.id" class="flex justify-center mb-4">
             <div class="card card-compact w-96 bg-black shadow mx-4 h-50 text-white" style="height: 100px;">
               <div class="flex items-center w-100">
                 <div class="thumbnail-container w-75 ">
@@ -73,15 +73,14 @@
                 </div>
                 <div class="card-actions flex flex-col items-center">
                   <button type="button" @click="playVideo(fav)"
-                    class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
+                    class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
                     <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                     Play
                   </button>
-
                   <button type="button" @click="delFromFavorites(fav)"
-                    class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
+                    class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
                     <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path d="M6 6 L18 18 M6 18 L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
@@ -94,11 +93,11 @@
           </div>
           <div class="flex justify-center">
             <button @click="previousPage" :disabled="currentPage === 0"
-              class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 favButton">
+              class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 favButton">
               Zurück
             </button>
             <button @click="nextPage" :disabled="currentPage === totalPages - 1"
-              class="text-white m-2 p-1 bg-black border-2 border-white rounded-lg text-sm px-3 py-2.5 favButton">
+              class="text-white m-2 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 favButton">
               Weiter
             </button>
           </div>

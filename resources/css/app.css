@@ -26,7 +26,13 @@
     }
     .favButton:hover{
       color: orangered !important;
+      border-color: white !important;
+    }
+    .border-orangered{
       border-color: orangered !important;
+    }
+    .text-orangered{
+      color: orangered !important;
     }
 
 /* Nav-Bar End */

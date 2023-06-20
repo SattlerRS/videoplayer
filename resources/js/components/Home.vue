@@ -21,7 +21,7 @@
         <div v-if="showVideoPlayer" class="flex justify-center items-center">
           <div class="mb-5 flex flex-col justify-center items-center shadow p-4 rounded">
             <iframe :src="getVideoUrlFav(favVideoId)" frameborder="0" allowfullscreen
-              style="width: 800px; height: 500px;"></iframe>
+              style="width: 50vw; height: 50vh;"></iframe>
             <button type="button" @click="hidePlayer()"
               class="text-white mt-4 bg-black border-2 border-orangered rounded-lg text-sm px-3 py-2.5 flex items-center justify-center favButton flex-grow">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
@@ -33,32 +33,29 @@
         </div>
         <!-- Videoplayer Favourites End -->
 
-        <!-- Search -->
-        <div
-          class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
-          id="searches">
-          <div v-for="video in searchResults" :key="video.id" class="w-full">
-            <div class="flex justify-center m-2">
-              <div class="card card-compact bg-black shadow mx-4"
-                style="min-width: 260px; max-width: 260px; min-height: 270px; max-height: 260px;">
-                <div class="p-2 flex justify-center">
-                  <div class="video-container">
-                    <iframe :src="getVideoUrl(video.id)" frameborder="0" allowfullscreen></iframe>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <h2 class="card-title text-white font-black text-center">{{ getVideoTitel(video.snippet.title) }}</h2>
-                  <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
-                    <div class="flex">
-                      <button type="button" @click="playVideo(video.id.videoId)"
-                        class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
-                        <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                        Play
-                      </button>
-                      <button type="button" @click="addToFavorites(video)"
-                        :class="{ 'fav-video': isFavorite(video.id.videoId) }" 
+                <!-- Search -->
+       
+                <div class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4" id="searches">
+  <div v-for="video in searchResults" :key="video.id" class="w-full">
+    <div class="flex justify-center m-2">
+      <div class="card card-compact bg-black shadow mx-4" style="min-width: 260px; max-width: 260px; min-height: 270px; max-height: 260px;">
+        <div class="p-2">
+          <div class="video-container" style="position: relative;">
+            <img :src="video.snippet.thumbnails.default.url" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title text-white font-black text-center">{{ getVideoTitel(video.snippet.title) }}</h2>
+          <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
+            <div class="flex">
+              <button type="button" @click="playVideo(video.id.videoId)" class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
+                <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Play
+              </button>
+              <button type="button" @click="addToFavorites(video)"
+                        :class="{ 'fav-video': isFavorite(video.id.videoId) }"
                         :disabled="isFavorite(video.id.videoId)"
                         :style="{ 'pointer-events': isFavorite(video.id.videoId) ? 'none' : 'auto' }"
                         class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
@@ -68,17 +65,15 @@
                         </svg>
                         Fav
                       </button>
-                    </div>
-                  </div>
-                  <h3
-                    style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">
-                    {{ video.duration }}</h3>
-                </div>
-              </div>
             </div>
           </div>
+          <h3 style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">{{ video.duration }}</h3>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+</div>
       <!-- Search End -->
 
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// Model für das FavVideo (Datenbank)
 class FavVideo extends Model
 {
     protected $table = 'fav_video';

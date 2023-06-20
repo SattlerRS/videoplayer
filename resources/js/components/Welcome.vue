@@ -44,7 +44,7 @@ export default {
     };
   },
   mounted() {
-    this.getRandomVideos();
+    // this.getRandomVideos();
   },
   methods: {
     getRandomVideos() {

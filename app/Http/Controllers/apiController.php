@@ -19,8 +19,9 @@ public function searchInApi(Request $request)
     $search = $request->validate([
         'search' => ['required'],
     ]);
-        // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
-    $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+    // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
+    // $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+        $apiKey = 'AIzaSyC_th321p3wH1vHt_ZMfZdWF4bar0xgQnk';
 
     $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
     $videoUrl = 'https://www.googleapis.com/youtube/v3/videos';

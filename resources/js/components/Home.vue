@@ -133,6 +133,7 @@ export default {
   },
   mounted() {
     this.fetchFavVideos();
+    this.getRandomVideos();
   },
   computed: {
     paginatedFavorites() {
@@ -148,7 +149,19 @@ export default {
     },
   },
   methods: {
-
+    getRandomVideos() {
+      axios
+        .get('/getRamdomVideos')
+        .then(response => {
+          // Erfolgreiche Antwort vom Backend erhalten
+          this.searchResults = response.data.items;
+          // Speichere die Suchergebnisse in der data-Eigenschaft
+        })
+        .catch(error => {
+          // Fehler beim Senden der Anfrage
+          console.error(error);
+        });
+    },
     getDisplayRange() {
       const startIndex = this.currentPage * this.itemsPerPage + 1;
       const endIndex = Math.min((this.currentPage + 1) * this.itemsPerPage, this.favVideos.length);

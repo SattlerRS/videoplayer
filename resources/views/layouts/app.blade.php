@@ -107,7 +107,7 @@
 
                         @if (Route::has('register'))
                         <li class="nav-item flex items-center text-white text-nav">
-                            <a class="px-4 py-2" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="px-4 py-2" href="{{ route('register') }}">{{ __('Registrieren') }}</a>
                         </li>
                         @endif
                         @else

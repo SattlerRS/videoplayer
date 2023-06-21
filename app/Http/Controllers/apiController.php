@@ -14,28 +14,27 @@ use DateInterval;
 
 class apiController extends Controller
 {
+    // Api Keys
+    private $googleApiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+    // private $googleApiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
+    // private $googleApiKey = 'AIzaSyC_th321p3wH1vHt_ZMfZdWF4bar0xgQnk';
+
 public function searchInApi(Request $request)
 {
     $search = $request->validate([
         'search' => ['required'],
     ]);
-    //Hier sind Verschiedene Google-api-keys fals sie ausgegen
-
-    // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
-    $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
-        // $apiKey = 'AIzaSyC_th321p3wH1vHt_ZMfZdWF4bar0xgQnk';
-
-
-    //Gibt die Länge des Videos zurück
-    $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
+    
     //Gibt die Video-id, Tite und den link für das thumbnail zurück
+    $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
+    //Gibt die Länge des Videos zurück
     $videoUrl = 'https://www.googleapis.com/youtube/v3/videos';
 
     //Hier wird alles für die Anfrage mitgegeben (Welche Informationen, der Suchbegriff, der Api-Key und die anzahl der Resultate )
     $searchParams = [
         'part' => 'snippet',
         'q' => $search['search'],
-        'key' => $apiKey,
+        'key' => $this->googleApiKey,
         'maxResults' => 10,
     ];
     // Sende eine HTTP-Anfrage an eine bestimmte URL mit den angegebenen Parametern
@@ -61,7 +60,7 @@ public function searchInApi(Request $request)
             $videoParams = [
                 'part' => 'contentDetails',// Die Teile der Videoinformationen, die abgerufen werden sollen
                 'id' => implode(',', $videoIds),
-                'key' => $apiKey,
+                'key' => $this->googleApiKey,
             ];
             $videoResponse = file_get_contents($videoUrl . '?' . http_build_query($videoParams));
             $videoResult = json_decode($videoResponse, true);
@@ -97,8 +96,6 @@ public function searchInApi(Request $request)
 
 public function getRandomVideos()
 {
-    // API-Schlüssel für YouTube
-    $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
 
     // URL für die Suchanfrage an die YouTube API
     $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
@@ -109,7 +106,7 @@ public function getRandomVideos()
     $searchParams = [
         'part' => 'snippet', // Nur den Snippet-Teil der Videoinformationen abrufen
         'order' => 'date', // Videos nach Datum sortieren
-        'key' => $apiKey,
+        'key' => $this->googleApiKey,
         'maxResults' => 50, // Große Anzahl von Videos abrufen
     ];
 
@@ -145,7 +142,7 @@ public function getRandomVideos()
             $videoParams = [
                 'part' => 'contentDetails', // Die Teile der Videoinformationen, die abgerufen werden sollen
                 'id' => implode(',', $videoIds), // Video-IDs als kommaseparierter String übergeben
-                'key' => $apiKey,
+                'key' => $this->googleApiKey,
             ];
 
             // Videoanfrage an die YouTube API senden und die Antwort abrufen

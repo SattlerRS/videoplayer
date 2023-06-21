@@ -3,10 +3,10 @@
     <div class="relative p-12 w-full sm:max-w-3xl sm:mx-auto">
       <div class="overflow-hidden z-0 rounded-full relative p-3">
         <form role="form" class="relative flex z-50 bg-orange-500 rounded-full" @submit.prevent="submitSearch">
-          <input v-model="searchText" type="text" placeholder="enter your search here"
+          <input v-model="searchText" type="text" placeholder="Nach Videos suchen"
             class="rounded-full flex-1 px-6 py-4 text-black focus:outline-none">
           <button type="submit"
-            class="bg-black text-white rounded-full font-semibold px-8 py-4 hover:bg-gray-900 focus:bg-gray-700 focus:outline-none">Search</button>
+            class="bg-black text-white rounded-full font-semibold px-8 py-4 hover:bg-gray-900 focus:bg-gray-700 focus:outline-none">Suchen</button>
         </form>
         <div class="glow glow-1 z-10 bg-orange-500 absolute"></div>
         <div class="glow glow-2 z-20 bg-orange-400 absolute"></div>

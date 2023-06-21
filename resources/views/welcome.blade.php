@@ -6,5 +6,4 @@
                 <welcome-component></welcome-component>
             </div>
         </main>
-        <div>Ausgelogt</div>
 @endsection

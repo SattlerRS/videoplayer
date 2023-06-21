@@ -22,8 +22,8 @@ public function searchInApi(Request $request)
     //Hier sind Verschiedene Google-api-keys fals sie ausgegen
 
     // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
-    // $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
-        $apiKey = 'AIzaSyC_th321p3wH1vHt_ZMfZdWF4bar0xgQnk';
+    $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+        // $apiKey = 'AIzaSyC_th321p3wH1vHt_ZMfZdWF4bar0xgQnk';
 
 
     //Gibt die Länge des Videos zurück

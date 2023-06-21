@@ -35,45 +35,45 @@
 
                 <!-- Search -->
        
-                <div class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4" id="searches">
-  <div v-for="video in searchResults" :key="video.id" class="w-full">
-    <div class="flex justify-center m-2">
-      <div class="card card-compact bg-black shadow mx-4" style="min-width: 260px; max-width: 260px; min-height: 270px; max-height: 260px;">
-        <div class="p-2">
-          <div class="video-container" style="position: relative;">
-            <img :src="video.snippet.thumbnails.default.url" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%; object-fit: cover;">
-          </div>
-        </div>
-        <div class="card-body">
-          <h2 class="card-title text-white font-black text-center">{{ getVideoTitel(video.snippet.title) }}</h2>
-          <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
-            <div class="flex">
-              <button type="button" @click="playVideo(video.id.videoId)" class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
-                <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-                Play
-              </button>
-              <button type="button" @click="addToFavorites(video)"
-                        :class="{ 'fav-video': isFavorite(video.id.videoId) }"
-                        :disabled="isFavorite(video.id.videoId)"
-                        :style="{ 'pointer-events': isFavorite(video.id.videoId) ? 'none' : 'auto' }"
-                        class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
-                        <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                          <path
-                            d="M12 21.35L4.81 17.4C2.39 15.9 1 13.36 1 10.65c0-2.91 2.37-5.28 5.28-5.28 1.59 0 3.03 0.71 4.02 1.83C11.69 6.09 11.86 6 12 6c0.14 0 0.31 0.09 0.7 0.2 0.99-1.12 2.43-1.83 4.02-1.83C20.63 5.37 23 7.74 23 10.65c0 2.71-1.39 5.25-3.81 6.75L12 21.35z" />
-                        </svg>
-                        Fav
-                      </button>
+  <div class="mt-2 mr-5 ml-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4" id="searches">
+    <div v-for="video in searchResults" :key="video.id" class="w-full">
+      <div class="flex justify-center m-2">
+        <div class="card card-compact bg-black shadow mx-4" style="min-width: 260px; max-width: 260px; min-height: 270px; max-height: 260px;">
+          <div class="p-2">
+            <div class="video-container" style="position: relative;">
+              <img :src="video.snippet.thumbnails.default.url" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%; object-fit: cover;">
             </div>
           </div>
-          <h3 style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">{{ video.duration }}</h3>
+          <div class="card-body">
+            <h2 class="card-title text-white font-black text-center">{{ getVideoTitel(video.snippet.title) }}</h2>
+            <div class="card-actions justify-end absolute bottom-0 right-0 mb-2 mr-2">
+              <div class="flex">
+                <button type="button" @click="playVideo(video.id.videoId)" class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
+                  <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  Play
+                </button>
+                <button type="button" @click="addToFavorites(video)"
+                          :class="{ 'fav-video': isFavorite(video.id.videoId) }"
+                          :disabled="isFavorite(video.id.videoId)"
+                          :style="{ 'pointer-events': isFavorite(video.id.videoId) ? 'none' : 'auto' }"
+                          class="text-white my-2 mx-1 p-1 bg-black border-2 border-orangered rounded-lg text-sm px-2 py-2.5 flex items-center justify-center favButton flex-grow">
+                          <svg class="h-4 w-4 fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path
+                              d="M12 21.35L4.81 17.4C2.39 15.9 1 13.36 1 10.65c0-2.91 2.37-5.28 5.28-5.28 1.59 0 3.03 0.71 4.02 1.83C11.69 6.09 11.86 6 12 6c0.14 0 0.31 0.09 0.7 0.2 0.99-1.12 2.43-1.83 4.02-1.83C20.63 5.37 23 7.74 23 10.65c0 2.71-1.39 5.25-3.81 6.75L12 21.35z" />
+                          </svg>
+                          Fav
+                        </button>
+                      </div>
+                    </div>
+                    <h3 style="position: absolute; bottom: 0; left: 0; margin-left: 24px; margin-bottom: 24px; color: white;">{{ video.duration }}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
       <!-- Search End -->
 
 
@@ -148,17 +148,25 @@ export default {
   },
   mounted() {
     this.fetchFavVideos();
-    // this.getRandomVideos();
+    this.getRandomVideos();
   },
   computed: {
     isFavorite() {
       return videoId => this.favVideos.some(fav => fav.video_id === videoId);
     },
     paginatedFavorites() {
+       // Diese Methode gibt eine paginierte Teilmenge der favorisierten Videos zurück
+      // Der Startindex der Teilmenge wird berechnet, indem die aktuelle Seite mit der Anzahl der Elemente pro Seite multipliziert wird
       const startIndex = this.currentPage * this.itemsPerPage;
+      // Der Endindex der Teilmenge wird berechnet, indem der Startindex zur Anzahl der Elemente pro Seite addiert wird
       const endIndex = startIndex + this.itemsPerPage;
+      // Die Teilmenge der favorisierten Videos wird mit Hilfe der slice() Methode erstellt
       return this.favVideos.slice(startIndex, endIndex);
     },
+
+    // Diese Methode gibt die Gesamtzahl der Seiten für die paginierte Darstellung zurück
+  // Die Gesamtzahl der Seiten wird berechnet, indem die Länge der favorisierten Videos durch die Anzahl der Elemente pro Seite geteilt wird
+  // Math.ceil() wird verwendet, um sicherzustellen, dass eine Rundung nach oben durchgeführt wird
     totalPages() {
       return Math.ceil(this.favVideos.length / this.itemsPerPage);
     },
@@ -181,16 +189,22 @@ export default {
         });
     },
     getDisplayRange() {
+      // Der Startindex wird berechnet, indem die aktuelle Seite mit der Anzahl der Elemente pro Seite multipliziert und 1 addiert wird
       const startIndex = this.currentPage * this.itemsPerPage + 1;
+      // Der Endindex wird berechnet, indem das Produkt aus der nächsten Seite und der Anzahl der Elemente pro Seite mit der Länge der favorisierten Videos verglichen wird
+      // Der kleinere Wert wird als Endindex verwendet, um sicherzustellen, dass der Bereich nicht über die Länge der Videos hinausgeht
       const endIndex = Math.min((this.currentPage + 1) * this.itemsPerPage, this.favVideos.length);
       return `Video (${startIndex}-${endIndex}) von ${this.favVideos.length}`;
     },
 
+     // Diese Methode wechselt zur vorherigen Seite, sofern verfügbar
     previousPage() {
       if (this.currentPage > 0) {
         this.currentPage--;
       }
     },
+
+    // Diese Methode wechselt zur nächsten Seite, sofern verfügbar
     nextPage() {
       if (this.currentPage < this.totalPages - 1) {
         this.currentPage++;
@@ -254,8 +268,9 @@ export default {
           });
       }
     },
-    getVideoUrl(videoId) {
-      return 'https://www.youtube.com/embed/' + videoId.videoId;
+    
+    getVideoUrl(video) {
+      return 'https://www.youtube.com/embed/' + video.videoId;
     },
     getVideoUrlFav(videoId) {
       return 'https://www.youtube.com/embed/' + videoId;
@@ -266,6 +281,7 @@ export default {
       }
       return videoTitel;
     },
+    //hier wird ein neuer Datensatz in die Datenbank geschrieben
     addToFavorites(video) {
       const videoData = {
         ID: video.id.videoId,
@@ -283,7 +299,7 @@ export default {
         .catch(error => {
           console.error(error);
         });
-      console.log(video.duration);
+      
     }
 
   }

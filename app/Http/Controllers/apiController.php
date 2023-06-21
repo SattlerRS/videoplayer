@@ -19,50 +19,150 @@ public function searchInApi(Request $request)
     $search = $request->validate([
         'search' => ['required'],
     ]);
+    //Hier sind Verschiedene Google-api-keys fals sie ausgegen
+
     // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
     // $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
         $apiKey = 'AIzaSyC_th321p3wH1vHt_ZMfZdWF4bar0xgQnk';
 
+
+    //Gibt die Länge des Videos zurück
     $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
+    //Gibt die Video-id, Tite und den link für das thumbnail zurück
     $videoUrl = 'https://www.googleapis.com/youtube/v3/videos';
 
+    //Hier wird alles für die Anfrage mitgegeben (Welche Informationen, der Suchbegriff, der Api-Key und die anzahl der Resultate )
     $searchParams = [
         'part' => 'snippet',
         'q' => $search['search'],
         'key' => $apiKey,
         'maxResults' => 10,
     ];
-
+    // Sende eine HTTP-Anfrage an eine bestimmte URL mit den angegebenen Parametern
     $searchResponse = file_get_contents($searchUrl . '?' . http_build_query($searchParams));
+    // Dekodiere die JSON-Antwort in ein assoziatives Array
     $searchResult = json_decode($searchResponse, true);
 
     $filteredResults = [];
 
+    // Hier wird überprüft ob das json object einen id enthält
     if (isset($searchResult['items'])) {
         $videoIds = [];
+         // Iteriere über jedes Element im Array $searchResult['items']
         foreach ($searchResult['items'] as $item) {
+            // Überprüfe, ob das Element den Schlüssel 'id' und innerhalb davon den Schlüssel 'videoId' enthält
             if (isset($item['id']['videoId'])) {
+                // Füge das Element zum Array $filteredResults hinzu
                 $filteredResults[] = $item;
+                // Füge die Video-ID zum Array $videoIds hinzu
                 $videoIds[] = $item['id']['videoId'];
             }
         }
-
-        if (!empty($videoIds)) {
             $videoParams = [
-                'part' => 'contentDetails',
+                'part' => 'contentDetails',// Die Teile der Videoinformationen, die abgerufen werden sollen
                 'id' => implode(',', $videoIds),
                 'key' => $apiKey,
             ];
-
             $videoResponse = file_get_contents($videoUrl . '?' . http_build_query($videoParams));
             $videoResult = json_decode($videoResponse, true);
 
             if (isset($videoResult['items'])) {
+                // Iteriere über jedes Element in $filteredResults
                 foreach ($filteredResults as &$item) {
+                    // Iteriere über jedes Element in $videoResult['items']
                     foreach ($videoResult['items'] as $video) {
+                        // Vergleiche die Video-ID des Elements in $filteredResults mit der Video-ID des Elements in $videoResult
                         if ($item['id']['videoId'] === $video['id']) {
+                            // Extrahiere die Dauer des Videos aus $videoResult und formatiere sie
                             $duration = $video['contentDetails']['duration'];
                             $formattedDuration = $this->covtime($duration);
+                             // Füge die formatierte Dauer dem Element in $filteredResults hinzu
+                            $item['duration'] = $formattedDuration;
+                            break;
+                        }
+                    }
+                }
+        }
+    }
+
+    $result['items'] = $filteredResults;
+    // Das Array $filteredResults, das die gefilterten und modifizierten Ergebnisse enthält, wird dem Array $result unter dem Schlüssel 'items' zugewiesen.
+    // Dadurch wird das Endergebnis strukturiert, indem die gefilterten Ergebnisse in einer passenden Form abgelegt werden.
+    
+    return response()->json($result);
+    // Die Methode gibt eine JSON-Antwort zurück, die das Ergebnis enthält.
+    // Die Funktion response() erstellt eine HTTP-Antwort, und die Methode json($result) konvertiert das Array $result in JSON-Format und gibt es als Teil der HTTP-Antwort zurück.
+    // Dadurch wird sichergestellt, dass das Endergebnis der Methode als JSON-Objekt zurückgegeben wird, das die gefilterten Ergebnisse enthält.
+}
+
+public function getRandomVideos()
+{
+    // API-Schlüssel für YouTube
+    $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
+
+    // URL für die Suchanfrage an die YouTube API
+    $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
+    // URL für die Videoinformationen von YouTube
+    $videoUrl = 'https://www.googleapis.com/youtube/v3/videos';
+
+    // Suchparameter für die YouTube API-Anfrage
+    $searchParams = [
+        'part' => 'snippet', // Nur den Snippet-Teil der Videoinformationen abrufen
+        'order' => 'date', // Videos nach Datum sortieren
+        'key' => $apiKey,
+        'maxResults' => 50, // Große Anzahl von Videos abrufen
+    ];
+
+    // Suchanfrage an die YouTube API senden und die Antwort abrufen
+    $searchResponse = file_get_contents($searchUrl . '?' . http_build_query($searchParams));
+    // Die Antwort in ein assoziatives Array umwandeln
+    $searchResult = json_decode($searchResponse, true);
+
+    // Array für die gefilterten Ergebnisse vorbereiten
+    $filteredResults = [];
+
+    // Überprüfen, ob die Antwort 'items' enthält
+    if (isset($searchResult['items'])) {
+        shuffle($searchResult['items']); // Zufällige Reihenfolge der Videos
+
+        // Die ersten 10 zufälligen Videos auswählen
+        $randomVideos = array_slice($searchResult['items'], 0, 10);
+
+        $videoIds = [];
+        foreach ($randomVideos as $item) {
+            // Überprüfen, ob das Video-Element den Schlüssel 'videoId' enthält
+            if (isset($item['id']['videoId'])) {
+                // Das Video zur Liste der gefilterten Ergebnisse hinzufügen
+                $filteredResults[] = $item;
+                // Die Video-ID zur Liste der Video-IDs hinzufügen
+                $videoIds[] = $item['id']['videoId'];
+            }
+        }
+
+        // Überprüfen, ob Video-IDs vorhanden sind
+        if (!empty($videoIds)) {
+            // Video-Parameter für die Videoinformationen erstellen
+            $videoParams = [
+                'part' => 'contentDetails', // Die Teile der Videoinformationen, die abgerufen werden sollen
+                'id' => implode(',', $videoIds), // Video-IDs als kommaseparierter String übergeben
+                'key' => $apiKey,
+            ];
+
+            // Videoanfrage an die YouTube API senden und die Antwort abrufen
+            $videoResponse = file_get_contents($videoUrl . '?' . http_build_query($videoParams));
+            // Die Antwort in ein assoziatives Array umwandeln
+            $videoResult = json_decode($videoResponse, true);
+
+            // Überprüfen, ob die Antwort 'items' enthält
+            if (isset($videoResult['items'])) {
+                foreach ($filteredResults as &$item) {
+                    foreach ($videoResult['items'] as $video) {
+                        // Überprüfen, ob die Video-ID des Elements mit der Video-ID des Videos übereinstimmt
+                        if ($item['id']['videoId'] === $video['id']) {
+                            $duration = $video['contentDetails']['duration'];
+                            // Die Dauer des Videos formatieren
+                            $formattedDuration = $this->covtime($duration);
+                            // Die formatierte Dauer dem Element hinzufügen
                             $item['duration'] = $formattedDuration;
                             break;
                         }
@@ -72,97 +172,38 @@ public function searchInApi(Request $request)
         }
     }
 
+    // Die gefilterten Ergebnisse dem Ergebnisarray zuweisen
     $result['items'] = $filteredResults;
 
+    // Die Ergebnisse als JSON-Antwort zurückgeben
     return response()->json($result);
 }
 
-    public function getRandomVideos()
-    {
-        // $apiKey = 'AIzaSyCoEWhLPxeFGbE-pSI3ve8TWW7g0EOwVDk';
-        $apiKey = 'AIzaSyC57jVf-kqK_LUtKPVIBn9ITX_fuTQtt14';
 
-        $searchUrl = 'https://www.googleapis.com/youtube/v3/search';
-        $videoUrl = 'https://www.googleapis.com/youtube/v3/videos';
-
-        $searchParams = [
-            'part' => 'snippet',
-            'order' => 'date',
-            // Videos nach Datum sortieren
-            'key' => $apiKey,
-            'maxResults' => 50, // Große Anzahl von Videos abrufen
-        ];
-
-        $searchResponse = file_get_contents($searchUrl . '?' . http_build_query($searchParams));
-        $searchResult = json_decode($searchResponse, true);
-
-        $filteredResults = [];
-
-        if (isset($searchResult['items'])) {
-            shuffle($searchResult['items']); // Zufällige Reihenfolge der Videos
-
-            $randomVideos = array_slice($searchResult['items'], 0, 10); // 10 zufällige Videos auswählen
-
-            $videoIds = [];
-            foreach ($randomVideos as $item) {
-                if (isset($item['id']['videoId'])) {
-                    $filteredResults[] = $item;
-                    $videoIds[] = $item['id']['videoId'];
-                }
-            }
-
-            if (!empty($videoIds)) {
-                $videoParams = [
-                    'part' => 'contentDetails',
-                    'id' => implode(',', $videoIds),
-                    'key' => $apiKey,
-                ];
-
-                $videoResponse = file_get_contents($videoUrl . '?' . http_build_query($videoParams));
-                $videoResult = json_decode($videoResponse, true);
-
-                if (isset($videoResult['items'])) {
-                    foreach ($filteredResults as &$item) {
-                        foreach ($videoResult['items'] as $video) {
-                            if ($item['id']['videoId'] === $video['id']) {
-                                $duration = $video['contentDetails']['duration'];
-                                $formattedDuration = $this->covtime($duration);
-                                $item['duration'] = $formattedDuration;
-                                break;
-                            }
-                        }
-                    }
-                }
+    function covtime($youtube_time){
+        $start = new DateTime('@0');
+        $start->add(new DateInterval($youtube_time));
+    
+        if ($start->format('H') != 00) {
+            // Wenn Stunden vorhanden sind, wird die gesamte Dauer zurückgegeben
+            if ($start->format('H')[0] == 0) {
+                // Wenn die Stundenanzahl kleiner als 10 ist, wird die führende Null entfernt
+                $eliminate_zero = substr($start->format('H:i:s'), 1);
+                return $eliminate_zero;
+            } else {
+                return $start->format('H:i:s');
             }
         }
-
-        $result['items'] = $filteredResults;
-
-        return response()->json($result);
-    }
-
-
-function covtime($youtube_time){
-    $start = new DateTime('@0');
-    $start->add(new DateInterval($youtube_time));
-
-    if ($start->format('H') != 00) { // if hours exist, return entire duration
-          if ($start->format('H')[0] == 0) { // if less than 10 hours, eliminate first zero
-           $eliminate_zero = substr($start->format('H:i:s'),1);
-          return $eliminate_zero;
-          }
-          else {
-            return $start->format('H:i:s');
-          }
-    }
-    elseif ($start->format('i')[0] == 0) {
-            $eliminate_zero = substr($start->format('i:s'),1);
+        elseif ($start->format('i')[0] == 0) {
+            // Wenn keine Stunden vorhanden sind und die Minutenanzahl kleiner als 10 ist, wird die führende Null entfernt
+            $eliminate_zero = substr($start->format('i:s'), 1);
             return $eliminate_zero;
+        } else {
+            return $start->format('i:s');
         }
-    else {
-    return $start->format('i:s');
     }
-}
+
+
     public function index(Request $request)
     {
         try {
